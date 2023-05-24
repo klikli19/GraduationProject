@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.skypro.homework.dto.Comment;
+import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.service.ResponseWrapperCommentService;
 import ru.skypro.homework.service.impl.CommentServiceImpl;
 import ru.skypro.homework.service.impl.CreateCommentImpl;
@@ -38,8 +38,8 @@ public class CommentController {
     }
 
     @DeleteMapping("{adId}/comments/{commentId}")
-    public ResponseEntity<Comment> comment (@PathVariable int adId,
-                                            @PathVariable int commentId) {
+    public ResponseEntity<CommentDTO> comment (@PathVariable int adId,
+                                               @PathVariable int commentId) {
         return ResponseEntity.ok().build();
     }
 
