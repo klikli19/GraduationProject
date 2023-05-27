@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/202305271700_graduation_project_table.sql
