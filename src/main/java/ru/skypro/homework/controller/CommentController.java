@@ -19,14 +19,6 @@ public class CommentController {
     private final CreateCommentImpl createComment;
     private final ResponseWrapperCommentService responseWrapperComment;
 
-//    public CommentController(CommentServiceImpl commentService,
-//                             CreateCommentImpl createComment,
-//                             ResponseWrapperCommentService responseWrapperComment) {
-//        this.commentService = commentService;
-//        this.createComment = createComment;
-//        this.responseWrapperComment = responseWrapperComment;
-//    }
-
     @GetMapping("{id}/comments")
     public ResponseEntity<?> comment (@PathVariable int id) {
         return ResponseEntity.ok().build();

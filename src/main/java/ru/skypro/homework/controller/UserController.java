@@ -21,7 +21,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/set_password")
-    public ResponseEntity<?> changePassword(@RequestBody NewPasswordDTO newPassword) { //Саша сделает NewPasswordDTO
+    public ResponseEntity<?> changePassword(@RequestBody NewPasswordDTO newPassword) {
         return ResponseEntity.ok().build();
     }
 
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile avatar) {
+    public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile image) {
         return ResponseEntity.ok().build();
     }
 }
