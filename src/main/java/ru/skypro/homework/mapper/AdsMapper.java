@@ -18,6 +18,7 @@ public interface AdsMapper {
 
     @Mapping(source = "id",target = "pk")
     @Mapping(source = "author.id",target = "author")
+    @Mapping(source = "image.id",target = "image")
     AdsDTO adToAdsDTO(Ad ad);
 
     Ad adsDtoToAd(CreateAdsDTO createAdsDTO);
@@ -27,6 +28,7 @@ public interface AdsMapper {
     @Mapping(source = "author.lastName",target = "authorLastName")
     @Mapping(source = "author.username",target = "email")
     @Mapping(source = "author.phone",target = "phone")
+    @Mapping(source = "image.id",target = "image")
     FullAdsDto adToFullAdsDto(Ad ad);
 
     Collection<AdsDTO> adsToAdsListDto(Collection<Ad> adsCollection);
