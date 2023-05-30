@@ -1,7 +1,6 @@
 package ru.skypro.homework.entity;
 
 import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,11 +15,10 @@ public class Ad {
     private int price;
     private String title;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User author;
 
-    @ManyToOne
-    @JoinColumn(name = "image_id")
+    @OneToOne
     private Image image;
 }

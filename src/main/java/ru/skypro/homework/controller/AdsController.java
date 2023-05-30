@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.AdsDTO;
 import ru.skypro.homework.dto.CreateAdsDTO;
-import ru.skypro.homework.dto.FullAds;
-import ru.skypro.homework.dto.ResponseWrapperAds;
+import ru.skypro.homework.dto.FullAdsDto;
+import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -19,7 +19,7 @@ import ru.skypro.homework.dto.ResponseWrapperAds;
 public class AdsController {
 
     @GetMapping
-    public ResponseEntity<ResponseWrapperAds> getAllAds(){
+    public ResponseEntity<ResponseWrapperAdsDto> getAllAds(){
         return ResponseEntity.ok().build();
     }
 
@@ -30,7 +30,7 @@ public class AdsController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<FullAds> getAd(@PathVariable int id){
+    public ResponseEntity<FullAdsDto> getAd(@PathVariable int id){
         return ResponseEntity.ok().build();
     }
 
@@ -46,7 +46,7 @@ public class AdsController {
     }
 
     @GetMapping("me")
-    public ResponseEntity<ResponseWrapperAds> getMeAd(){
+    public ResponseEntity<ResponseWrapperAdsDto> getMeAd(){
         return ResponseEntity.ok().build();
     }
 
