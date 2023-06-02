@@ -2,6 +2,7 @@ package ru.skypro.homework.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import ru.skypro.homework.dto.AdsDTO;
@@ -18,7 +19,7 @@ public interface AdsMapper {
 
     @Mapping(source = "id",target = "pk")
     @Mapping(source = "author.id",target = "author")
-    @Mapping(source = "image.id",target = "image")
+    @Mapping(target = "image",expression = "java(imageMapper(ad))")
     AdsDTO adToAdsDTO(Ad ad);
 
     Ad adsDtoToAd(CreateAdsDTO createAdsDTO);
@@ -28,8 +29,14 @@ public interface AdsMapper {
     @Mapping(source = "author.lastName",target = "authorLastName")
     @Mapping(source = "author.email",target = "email")
     @Mapping(source = "author.phone",target = "phone")
-    @Mapping(source = "image.id",target = "image")
+    @Mapping(target = "image",expression = "java(imageMapper(ad))")
     FullAdsDto adToFullAdsDto(Ad ad);
 
+    void updateAds(CreateAdsDTO createAdsDTO, @MappingTarget Ad ad);
+
     Collection<AdsDTO> adsToAdsListDto(Collection<Ad> adsCollection);
+
+    default String imageMapper(Ad ad){
+        return "ads/"+ ad.getId() +"/getImage";
+    }
 }
