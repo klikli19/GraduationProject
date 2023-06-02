@@ -24,7 +24,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     private String password;
-    private String username;
+    private String email;
 
     @OneToOne
     @JoinColumn(name = "image_id")
