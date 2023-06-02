@@ -20,5 +20,6 @@ public class Ad {
     private User author;
 
     @OneToOne
+    @JoinColumn(name = "image_id")
     private Image image;
 }
