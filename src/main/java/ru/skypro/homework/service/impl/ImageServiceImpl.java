@@ -10,6 +10,7 @@ import ru.skypro.homework.service.ImageService;
 public class ImageServiceImpl implements ImageService {
 //    private final Image image;
 
+    private ImageService imageService;
 //    public ImageServiceImpl(Image image) {
 //        this.image = image;
 //    }
@@ -25,7 +26,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image find(Long id) {
-        return null;
+        return imageService.find(id);
     }
 
     @Override
