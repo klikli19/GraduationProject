@@ -21,12 +21,14 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/set_password")
-    public ResponseEntity<?> changePassword(@RequestBody NewPasswordDTO newPassword) {
+    public ResponseEntity<?> changePassword(@RequestBody NewPasswordDTO newPassword, Authentication authentication) {
+        service.changePassword(newPassword, authentication);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/me")
     public ResponseEntity<?> getAuthorizedUser(Authentication authentication) {
+        service.getAuthorizedUser(authentication);
         return ResponseEntity.ok().build();
     }
 
@@ -37,7 +39,8 @@ public class UserController {
     }
 
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile image) {
+    public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile image, Authentication authentication) {
+        service.updateAvatar(image, authentication);
         return ResponseEntity.ok().build();
     }
 }
