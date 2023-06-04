@@ -4,24 +4,28 @@ import ch.qos.logback.core.util.FileSize;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.entity.Image;
+import ru.skypro.homework.repository.FileSystemRepository;
+import ru.skypro.homework.repository.ImageDbRepository;
 import ru.skypro.homework.service.ImageService;
 
 @Service
 public class ImageServiceImpl implements ImageService {
-//    private final Image image;
 
     private ImageService imageService;
-//    public ImageServiceImpl(Image image) {
-//        this.image = image;
-//    }
 
+    final FileSystemRepository fileSystemRepository;
+    final ImageDbRepository imageDbRepository;
+
+    public ImageServiceImpl(FileSystemRepository fileSystemRepository, ImageDbRepository imageDbRepository) {
+        this.fileSystemRepository = fileSystemRepository;
+        this.imageDbRepository = imageDbRepository;
+    }
 
     @Override
-    public Image savingAnImage(Image image) {
-        if (image == null){
-            return null;
-        }
-        return null;
+    public Long savingAnImage(byte[] data, long date) throws Exception {
+        String location = fileSystemRepository.save(data, date);
+
+        return imageDbRepository.save(new Image()).getId();
     }
 
     @Override

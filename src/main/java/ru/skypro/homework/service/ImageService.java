@@ -5,7 +5,8 @@ import org.springframework.http.MediaType;
 import ru.skypro.homework.entity.Image;
 
 public interface ImageService {
-    Image savingAnImage(Image image);
+
+    Long savingAnImage(byte[] data, long date) throws Exception;
     Image find(Long id);
     Image imageCompression(FileSize fileSize, Long id);
     Image updatingImage(Image image, Long id);
