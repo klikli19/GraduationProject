@@ -31,16 +31,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getAuthorizedUser(Authentication authentication) {
-        return null;
+        return UserMapper.INSTANCE.toDTO(userRepository.getUserByEmail(authentication.getName()));
     }
 
     @Override
-    public void changePassword(NewPasswordDTO newPasswordDTO) {
-
+    public void changePassword(NewPasswordDTO newPasswordDTO, Authentication authentication) {
+        User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
+        user.setPassword(newPasswordDTO.getNewPassword());
+        userRepository.save(user);
+        userMapper.toDTO(user);
     }
 
     @Override
-    public void updateAvatar(MultipartFile image) {
-
+    public void updateAvatar(MultipartFile image, Authentication authentication) {
+        User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
+        if (user.getImage() != null) {
+            imageService.delete(user.getImage());
+        }
+        user.setImage(imageService.savingAnImage(image));
+        userRepository.save(user);
+        userMapper.toDTO(user);
     }
 }
