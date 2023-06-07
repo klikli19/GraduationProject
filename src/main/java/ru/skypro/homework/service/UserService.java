@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDTO;
 import ru.skypro.homework.dto.UserDTO;
+import ru.skypro.homework.entity.User;
 
 public interface UserService {
 
@@ -11,4 +12,5 @@ public interface UserService {
     UserDTO getAuthorizedUser(Authentication authentication);
     void changePassword(NewPasswordDTO newPasswordDTO);
     void updateAvatar(MultipartFile image);
+    User findUser(Long userId);
 }

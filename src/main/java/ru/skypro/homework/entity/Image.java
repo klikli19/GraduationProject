@@ -1,11 +1,8 @@
 package ru.skypro.homework.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-
-import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -27,26 +24,29 @@ public class Image {
     @Lob
     private byte[] data;
 
-    public Image(String name, long fileSize, String mediaType, byte[] data) {
-        this.name = name;
-        this.fileSize = fileSize;
-        this.mediaType = mediaType;
-        this.data = data;
-    }
-    public Image(String name){
-        this.name = name;
-    }
+    @OneToOne(mappedBy = "image")
+    private User user;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Image image = (Image) o;
-        return getId() != null && Objects.equals(getId(), image.getId());
-    }
+//    public Image(String name, long fileSize, String mediaType, byte[] data) {
+//        this.name = name;
+//        this.fileSize = fileSize;
+//        this.mediaType = mediaType;
+//        this.data = data;
+//    }
+//    public Image(String name){
+//        this.name = name;
+//    }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+//        Image image = (Image) o;
+//        return getId() != null && Objects.equals(getId(), image.getId());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return getClass().hashCode();
+//    }
 }
