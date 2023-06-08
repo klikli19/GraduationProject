@@ -1,17 +1,21 @@
 package ru.skypro.homework.controller;
 
+import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.AdsDTO;
 import ru.skypro.homework.dto.CreateAdsDTO;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
+import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.service.AdService;
+
+import java.util.List;
 
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -23,19 +27,28 @@ public class AdsController {
     private final AdService adService;
 
     @GetMapping
-    public ResponseEntity<ResponseWrapperAdsDto> getAllAds(){
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ResponseWrapperAdsDto> getAllAds(@RequestParam(required = false) String title){
+        ResponseWrapperAdsDto response =
+                new ResponseWrapperAdsDto((List<AdsDTO>) adService.getAllAds(title));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AdsDTO> createAds(@RequestPart MultipartFile properties,
-                                            @RequestPart MultipartFile image){
-        return ResponseEntity.ok().build();
+    public ResponseEntity<AdsDTO> createAds(@RequestPart("properties") @NotNull CreateAdsDTO createAdsDTO,
+                                            @RequestPart MultipartFile image,
+                                            @NotNull Authentication authentication){
+
+        return ResponseEntity.ok(adService.createAd(createAdsDTO,image,authentication));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<FullAdsDto> getAd(@PathVariable int id){
-        return ResponseEntity.ok().build();
+        try {
+            FullAdsDto fullAdsDto = adService.getFullAd((long) id);
+            return ResponseEntity.ok(fullAdsDto);
+        } catch (AdNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("{id}")
