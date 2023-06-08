@@ -11,6 +11,8 @@ import ru.skypro.homework.dto.NewPasswordDTO;
 import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.service.UserService;
 
+import java.io.IOException;
+
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -21,22 +23,26 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/set_password")
-    public ResponseEntity<?> changePassword(@RequestBody NewPasswordDTO newPassword) {
+    public ResponseEntity<?> changePassword(@RequestBody NewPasswordDTO newPassword, Authentication authentication) {
+        service.changePassword(newPassword, authentication);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/me")
     public ResponseEntity<?> getAuthorizedUser(Authentication authentication) {
+        service.getAuthorizedUser(authentication);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/me")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO user) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, Authentication authentication) {
+        service.updateUser(userDTO, authentication);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile image) {
+    public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile image, Authentication authentication) throws IOException {
+        service.updateAvatar(image, authentication);
         return ResponseEntity.ok().build();
     }
 }
