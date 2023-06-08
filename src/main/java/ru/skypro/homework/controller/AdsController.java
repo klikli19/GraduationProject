@@ -14,6 +14,7 @@ import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.service.AdService;
+import ru.skypro.homework.service.impl.AdServiceImpl;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
 @RequestMapping("ads")
 public class AdsController {
 
-    private final AdService adService;
+    private final AdServiceImpl adService;
 
     @GetMapping
     public ResponseEntity<ResponseWrapperAdsDto> getAllAds(@RequestParam(required = false) String title){
