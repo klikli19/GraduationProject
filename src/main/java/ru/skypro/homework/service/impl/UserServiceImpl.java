@@ -12,12 +12,14 @@ import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
 
+import java.io.IOException;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-//    private final ImageServiceImpl imageService;
+    private final ImageServiceImpl imageService;
 
     @Override
     public UserDTO updateUser(UserDTO userDTO, Authentication authentication) {
@@ -43,12 +45,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateAvatar(MultipartFile image, Authentication authentication) {
+    public void updateAvatar(MultipartFile image, Authentication authentication) throws IOException {
         User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
         if (user.getImage() != null) {
-            imageService.delete(user.getImage());
+            imageService.deleteImage(user.getImage());
         }
-        user.setImage(imageService.savingAnImage(image));
+        user.setImage(imageService.downloadImage(image));
         userRepository.save(user);
         userMapper.toDTO(user);
     }
