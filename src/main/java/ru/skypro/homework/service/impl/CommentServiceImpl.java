@@ -23,6 +23,7 @@ public class CommentServiceImpl implements CommentService {
         this.adRepository = adRepository;
     }
 
+    @Override
     public ResponseWrapperComment getAllComments(int idAd) {
         List<Comment> comments = (List<Comment>) commentRepository.findByAd_Id(idAd);
         List<CommentDTO> commentDTOList = CommentMapper.INSTANCE.commentsToCommentsListDto(comments);
@@ -34,6 +35,7 @@ public class CommentServiceImpl implements CommentService {
         return wrapperComment;
     }
 
+    @Override
     public CreateCommentDTO addComment(int id, String comment) {
         CreateCommentDTO commentDTO = new CreateCommentDTO();
         commentDTO.setText(comment);
@@ -47,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteByIdAndAd_Id(adId, commentId);
     }
 
-
+    @Override
     public CommentDTO updateComment(int adId, int commentId, Comment comment) {
         Comment updatedComment = commentRepository.findByIdAndPk(adId, commentId);
         updatedComment.setText(comment.getText());
