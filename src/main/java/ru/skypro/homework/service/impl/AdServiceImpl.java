@@ -8,11 +8,14 @@ import ru.skypro.homework.dto.AdsDTO;
 import ru.skypro.homework.dto.CreateAdsDTO;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ad;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.service.AdService;
+import ru.skypro.homework.service.ImageService;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @Service
@@ -20,11 +23,13 @@ import java.util.Collection;
 public class AdServiceImpl implements AdService {
 
     private final AdRepository adRepository;
+    private final ImageService imageService;
+
 
     @Override
     public Collection<AdsDTO> getAllAds(String title) {
         if (title == null){
-            return null;
+            return AdsMapper.INSTANCE.adsToAdsListDto(adRepository.findAll());
         }
 
         return AdsMapper.INSTANCE.adsToAdsListDto(
@@ -34,11 +39,18 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication) {
         if(createAdsDTO == null){
-            return null;
+            throw new RuntimeException("Нет полных данных для создания объявления");
+        }
+        Image adImage;
+        try {
+            adImage = imageService.downloadImage(image);
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось сохранить фото");
         }
 
         Ad ad = AdsMapper.INSTANCE.adsDtoToAd(createAdsDTO);
-        //ad.setImage(image);
+        ad.setImage(adImage);
+        //ad.setAuthor();
         adRepository.save(ad);
 
         return AdsMapper.INSTANCE.adToAdsDTO(ad);
