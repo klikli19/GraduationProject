@@ -47,3 +47,4 @@ public interface CommentMapper {
     List<CommentDTO> commentsToCommentsListDto(Collection<Comment> commentCollection);
 
 }
+
