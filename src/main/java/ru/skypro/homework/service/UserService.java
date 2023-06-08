@@ -7,7 +7,7 @@ import ru.skypro.homework.dto.UserDTO;
 
 public interface UserService {
 
-    UserDTO updateUser(UserDTO userDTO);
+    UserDTO updateUser(UserDTO userDTO, Authentication authentication);
     UserDTO getAuthorizedUser(Authentication authentication);
     void changePassword(NewPasswordDTO newPasswordDTO);
     void updateAvatar(MultipartFile image);
