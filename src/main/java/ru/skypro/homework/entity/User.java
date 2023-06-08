@@ -5,6 +5,7 @@ import ru.skypro.homework.constant.Role;
 
 import javax.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -29,5 +30,8 @@ public class User {
     @OneToOne
     @JoinColumn(name = "image_id")
     private Image image;
+
+    @OneToMany
+    private List<Comment> comment;
 
 }
