@@ -10,14 +10,15 @@ import java.time.LocalDateTime;
 @Table(name = "comment")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private int author;
-    private String authorImage;
-    private String authorFirstName;
     private LocalDateTime createdAt;
     private int pk;
     private String text;
+    @ManyToOne
+    private Ad ad;
+    @ManyToOne
+    private User author;
 
 }
