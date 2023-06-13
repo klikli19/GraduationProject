@@ -14,7 +14,6 @@ import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsDto;
 import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.service.AdService;
-import ru.skypro.homework.service.impl.AdServiceImpl;
 
 import java.util.List;
 
@@ -24,8 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("ads")
 public class AdsController {
-
-    private final AdServiceImpl adService;
+    private final AdService adService;
 
     @GetMapping
     public ResponseEntity<ResponseWrapperAdsDto> getAllAds(@RequestParam(required = false) String title){
@@ -54,23 +52,38 @@ public class AdsController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteAd(@PathVariable int id){
-        return ResponseEntity.ok().build();
+        try{
+            adService.deleteAd((long)id);
+            return ResponseEntity.ok().build();
+        }
+        catch (AdNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<AdsDTO> updateAd(@PathVariable int id,
                                            @RequestBody CreateAdsDTO createAdsDTO){
+        adService.updateAd(createAdsDTO,(long)id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("me")
-    public ResponseEntity<ResponseWrapperAdsDto> getMeAd(){
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ResponseWrapperAdsDto> getMeAd(@NotNull Authentication authentication){
+        ResponseWrapperAdsDto response =
+                new ResponseWrapperAdsDto((List<AdsDTO>) adService.getUserAllAds(authentication));
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping(value = "{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateImageAd(@PathVariable int id,
                                            @RequestPart MultipartFile image){
-        return ResponseEntity.ok().build();
+        try {
+            adService.updateImage((long) id,image);
+            return ResponseEntity.ok().build();
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 }
