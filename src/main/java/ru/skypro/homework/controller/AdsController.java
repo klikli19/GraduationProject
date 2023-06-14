@@ -8,15 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.dto.AdsDTO;
-import ru.skypro.homework.dto.CreateAdsDTO;
-import ru.skypro.homework.dto.FullAdsDto;
-import ru.skypro.homework.dto.ResponseWrapperAdsDto;
-import ru.skypro.homework.exception.AdNotFoundException;
+import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.AdService;
-import ru.skypro.homework.service.impl.AdServiceImpl;
 
-import java.util.List;
+import java.util.Collection;
 
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -24,13 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("ads")
 public class AdsController {
-
-    private final AdServiceImpl adService;
+    private final AdService adService;
 
     @GetMapping
-    public ResponseEntity<ResponseWrapperAdsDto> getAllAds(@RequestParam(required = false) String title){
-        ResponseWrapperAdsDto response =
-                new ResponseWrapperAdsDto((List<AdsDTO>) adService.getAllAds(title));
+    public ResponseEntity<ResponseWrapper<AdsDTO>> getAllAds(@RequestParam(required = false) String title){
+        ResponseWrapper<AdsDTO> response =
+                    new ResponseWrapper<>(adService.getAllAds(title));
         return ResponseEntity.ok(response);
     }
 
@@ -44,33 +38,39 @@ public class AdsController {
 
     @GetMapping("{id}")
     public ResponseEntity<FullAdsDto> getAd(@PathVariable int id){
-        try {
-            FullAdsDto fullAdsDto = adService.getFullAd((long) id);
-            return ResponseEntity.ok(fullAdsDto);
-        } catch (AdNotFoundException e){
-            return ResponseEntity.notFound().build();
-        }
+        FullAdsDto fullAdsDto = adService.getFullAd((long) id);
+        return ResponseEntity.ok(fullAdsDto);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteAd(@PathVariable int id){
+        adService.deleteAd((long)id);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<AdsDTO> updateAd(@PathVariable int id,
                                            @RequestBody CreateAdsDTO createAdsDTO){
+        adService.updateAd(createAdsDTO,(long)id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("me")
-    public ResponseEntity<ResponseWrapperAdsDto> getMeAd(){
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ResponseWrapper<AdsDTO>> getMeAd(@NotNull Authentication authentication){
+        ResponseWrapper<AdsDTO> response =
+                    new ResponseWrapper<>(adService.getUserAllAds(authentication));
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping(value = "{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateImageAd(@PathVariable int id,
-                                           @RequestPart MultipartFile image){
+    public ResponseEntity<?> updateImageAd(@PathVariable int id, @RequestPart MultipartFile image){
+        adService.updateImage((long) id,image);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("{id}/image")
+    public ResponseEntity<byte[]> getImage(@PathVariable int id){
+        return ResponseEntity.ok(adService.getImage((long) id));
+    }
+
 }

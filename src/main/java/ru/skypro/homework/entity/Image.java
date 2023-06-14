@@ -20,6 +20,6 @@ public class Image {
     private String name;
     private long fileSize;
     private String mediaType;
-    @Lob
+    //@Lob
     private byte[] data;
 }

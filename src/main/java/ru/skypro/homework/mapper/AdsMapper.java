@@ -4,7 +4,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
 import ru.skypro.homework.dto.AdsDTO;
 import ru.skypro.homework.dto.CreateAdsDTO;
 import ru.skypro.homework.dto.FullAdsDto;
@@ -14,8 +13,6 @@ import java.util.Collection;
 
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AdsMapper {
-
-    AdsMapper INSTANCE = Mappers.getMapper(AdsMapper.class);
 
     @Mapping(source = "id",target = "pk")
     @Mapping(source = "author.id",target = "author")
@@ -37,6 +34,6 @@ public interface AdsMapper {
     Collection<AdsDTO> adsToAdsListDto(Collection<Ad> adsCollection);
 
     default String imageMapper(Ad ad){
-        return "ads/"+ ad.getId() +"/getImage";
+        return "ads/{id}/image";
     }
 }
