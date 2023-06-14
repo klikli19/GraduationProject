@@ -17,4 +17,5 @@ public interface AdService {
    AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId);
    Collection<AdsDTO> getUserAllAds(Authentication authentication);
    String updateImage(Long adId,MultipartFile image);
+   byte[] getImage(Long id);
 }

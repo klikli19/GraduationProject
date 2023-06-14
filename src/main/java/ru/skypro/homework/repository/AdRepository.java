@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface AdRepository extends JpaRepository<Ad,Long> {
 
-    @Query(value = "SELECT * FROM ads WHERE title LIKE %title%", nativeQuery = true)
+    @Query(value = "SELECT * FROM ads WHERE title LIKE %:title%", nativeQuery = true)
     List<Ad> findByTitleLikeIgnoreCase(@Param("title") String title);
 
     Collection<Ad> findAllAdsByAuthorId(long userId);

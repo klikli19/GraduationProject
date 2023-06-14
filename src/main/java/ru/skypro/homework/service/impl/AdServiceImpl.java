@@ -23,10 +23,13 @@ import ru.skypro.homework.service.UserService;
 import java.io.IOException;
 import java.util.Collection;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 @Service
 @RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
 
+    private final AdsMapper adsMapper;
     private final AdRepository adRepository;
     private final ImageService imageService;
     private final UserService userService;
@@ -35,40 +38,39 @@ public class AdServiceImpl implements AdService {
     @Override
     public Collection<AdsDTO> getAllAds(String title) {
         log.info("Request to receive all ads");
-        if (title == null){
-            return AdsMapper.INSTANCE.adsToAdsListDto(adRepository.findAll());
+        Collection<Ad> ads;
+        if (!isEmpty(title)){
+            ads = adRepository.findByTitleLikeIgnoreCase(title);
         }
-
-        return AdsMapper.INSTANCE.adsToAdsListDto(
-                adRepository.findByTitleLikeIgnoreCase(title));
+        else{
+            ads = adRepository.findAll();
+        }
+        return adsMapper.adsToAdsListDto(ads);
     }
 
     @Override
     public AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication) {
+        Ad ad = adsMapper.adsDtoToAd(createAdsDTO);
+        //User user = UserMapper.INSTANCE.toEntity(userService.getAuthorizedUser(authentication));
+        //ad.setAuthor(user);
         log.info("Request to create new ad");
-        if(createAdsDTO == null){
-            throw new RuntimeException("Нет полных данных для создания объявления");
-        }
         Image adImage;
         try {
             adImage = imageService.downloadImage(image);
         } catch (IOException e) {
             throw new RuntimeException("Не удалось сохранить фото");
         }
-
-        Ad ad = AdsMapper.INSTANCE.adsDtoToAd(createAdsDTO);
         ad.setImage(adImage);
-        User user = UserMapper.INSTANCE.toEntity(userService.getAuthorizedUser(authentication));
-        ad.setAuthor(user);
         adRepository.save(ad);
+        log.info("Save new ad" + ad);
 
-        return AdsMapper.INSTANCE.adToAdsDTO(ad);
+        return adsMapper.adToAdsDTO(ad);
     }
 
     @Override
     public FullAdsDto getFullAd(Long adId) {
         log.info("Request to get full info about ad");
-        return AdsMapper.INSTANCE.adToFullAdsDto(
+        return adsMapper.adToFullAdsDto(
                 adRepository.findById(adId).orElseThrow(AdNotFoundException::new));
     }
 
@@ -85,29 +87,28 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId) {
+        log.info("Request to update ad by id");
         if(adId == null || adRepository.findById(adId).isEmpty()){
             return null;
         }
 
-        Ad ad = AdsMapper.INSTANCE.adsDtoToAd(createAdsDTO);
+        Ad ad = adsMapper.adsDtoToAd(createAdsDTO);
         adRepository.save(ad);
 
-        return AdsMapper.INSTANCE.adToAdsDTO(ad);
+        return adsMapper.adToAdsDTO(ad);
     }
 
     @Override
     public Collection<AdsDTO> getUserAllAds(Authentication authentication) {
-        User user = UserMapper.INSTANCE.toEntity(userService.getAuthorizedUser(authentication));
-        Collection<Ad> ads = adRepository.findAllAdsByAuthorId(user.getId());
-
-        return AdsMapper.INSTANCE.adsToAdsListDto(ads);
+        log.info("Request to get all user ads");
+        int id = userService.getAuthorizedUser(authentication).getId();
+        Collection<Ad> ads = adRepository.findAllAdsByAuthorId(id);
+        return adsMapper.adsToAdsListDto(ads);
     }
 
     @Override
     public String updateImage(Long adId, MultipartFile image) {
-        if(adId == null){
-            return "Ad was not found";
-        }
+        log.info("Request to update image");
         Ad updateAd = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
         try {
             updateAd.setImage(imageService.downloadImage(image));
@@ -115,6 +116,11 @@ public class AdServiceImpl implements AdService {
             throw new RuntimeException(e);
         }
         adRepository.save(updateAd);
-        return "Photo updated";
+        return "ads/" + adId + "/image";
+    }
+
+    @Override
+    public byte[] getImage(Long id) {
+        return adRepository.findById(id).orElseThrow(AdNotFoundException::new).getImage().getData();
     }
 }
