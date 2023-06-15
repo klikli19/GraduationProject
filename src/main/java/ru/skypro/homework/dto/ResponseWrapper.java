@@ -7,8 +7,8 @@ import java.util.Collection;
 @Data
 public class ResponseWrapper<T> {
 
-    private int count;
-    private Collection<T> result;
+    private final int count;
+    private final Collection<T> result;
 
     public ResponseWrapper(Collection<T> result) {
         this.count = result.size();
