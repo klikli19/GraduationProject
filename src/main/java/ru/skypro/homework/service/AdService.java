@@ -11,6 +11,7 @@ import java.util.Collection;
 
 public interface AdService {
    Collection<AdsDTO> getAllAds(String title);
+   Collection<AdsDTO> getAllAds();
    AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication);
    FullAdsDto getFullAd(Long adId);
    void deleteAd(Long adId);

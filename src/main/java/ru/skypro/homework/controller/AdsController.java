@@ -11,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.AdService;
 
-import java.util.Collection;
-
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -22,9 +20,10 @@ public class AdsController {
     private final AdService adService;
 
     @GetMapping
-    public ResponseEntity<ResponseWrapper<AdsDTO>> getAllAds(@RequestParam(required = false) String title){
+    public ResponseEntity<ResponseWrapper<AdsDTO>> getAllAds(){
+        //@RequestParam(required = false) String title
         ResponseWrapper<AdsDTO> response =
-                    new ResponseWrapper<>(adService.getAllAds(title));
+                    new ResponseWrapper<>(adService.getAllAds());
         return ResponseEntity.ok(response);
     }
 

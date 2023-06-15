@@ -49,6 +49,14 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
+    public Collection<AdsDTO> getAllAds() {
+        log.info("Request to receive all ads");
+        Collection<Ad> ads;
+        ads = adRepository.findAll();
+        return adsMapper.adsToAdsListDto(ads);
+    }
+
+    @Override
     public AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication) {
         Ad ad = adsMapper.adsDtoToAd(createAdsDTO);
         //User user = UserMapper.INSTANCE.toEntity(userService.getAuthorizedUser(authentication));
