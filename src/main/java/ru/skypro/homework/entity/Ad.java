@@ -26,4 +26,15 @@ public class Ad {
 
     @OneToMany
     private List<Comment> comment;
+
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", title='" + title + '\'' +
+                ", author=" + author +
+                '}';
+    }
 }

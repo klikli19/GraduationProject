@@ -13,8 +13,9 @@ public interface AdService {
    Collection<AdsDTO> getAllAds(String title);
    AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication);
    FullAdsDto getFullAd(Long adId);
-   void deleteAd(Long adId, Authentication authentication);
-   AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId, Authentication authentication);
-   Collection<AdsDTO> getUserAllAds(Long userId, Authentication authentication);
-   String updateImage(Long adId,MultipartFile image, Authentication authentication);
+   void deleteAd(Long adId);
+   AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId);
+   Collection<AdsDTO> getUserAllAds(Authentication authentication);
+   String updateImage(Long adId,MultipartFile image);
+   byte[] getImage(Long id);
 }
