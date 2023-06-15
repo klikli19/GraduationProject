@@ -31,7 +31,8 @@ public interface UserMapper {
         return "users/me/image" + image.getId();
     }
 
-    @Mapping(target = "password", source = "password")
     User toEntity(LoginReq dto);
 
+    @Mapping(target = "email", source = "username")
+    User toEntity(RegisterReq req);
 }
