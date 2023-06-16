@@ -11,10 +11,8 @@ import ru.skypro.homework.dto.CreateAdsDTO;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.Image;
-import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.mapper.AdsMapper;
-import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.ImageService;
@@ -49,18 +47,9 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Collection<AdsDTO> getAllAds() {
-        log.info("Request to receive all ads");
-        Collection<Ad> ads;
-        ads = adRepository.findAll();
-        return adsMapper.adsToAdsListDto(ads);
-    }
-
-    @Override
     public AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication) {
         Ad ad = adsMapper.adsDtoToAd(createAdsDTO);
-        //User user = UserMapper.INSTANCE.toEntity(userService.getAuthorizedUser(authentication));
-        //ad.setAuthor(user);
+        ad.setAuthor(userService.getAuthorizedUser(authentication));
         log.info("Request to create new ad");
         Image adImage;
         try {
@@ -70,7 +59,7 @@ public class AdServiceImpl implements AdService {
         }
         ad.setImage(adImage);
         adRepository.save(ad);
-        log.info("Save new ad" + ad);
+        log.info("Save new ad ID:" + ad.getId());
 
         return adsMapper.adToAdsDTO(ad);
     }
@@ -78,8 +67,8 @@ public class AdServiceImpl implements AdService {
     @Override
     public FullAdsDto getFullAd(Long adId) {
         log.info("Request to get full info about ad");
-        return adsMapper.adToFullAdsDto(
-                adRepository.findById(adId).orElseThrow(AdNotFoundException::new));
+        Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
+        return adsMapper.adToFullAdsDto(ad);
     }
 
     @Override
@@ -109,26 +98,25 @@ public class AdServiceImpl implements AdService {
     @Override
     public Collection<AdsDTO> getUserAllAds(Authentication authentication) {
         log.info("Request to get all user ads");
-        int id = userService.getAuthorizedUser(authentication).getId();
-        Collection<Ad> ads = adRepository.findAllAdsByAuthorId(id);
+        Collection<Ad> ads;
+        ads = adRepository.findAllAdsByAuthorId(userService.getAuthorizedUserDto(authentication).getId());
         return adsMapper.adsToAdsListDto(ads);
     }
 
     @Override
-    public String updateImage(Long adId, MultipartFile image) {
+    public String updateImage(Long adId, MultipartFile image) throws IOException {
         log.info("Request to update image");
         Ad updateAd = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
-        try {
-            updateAd.setImage(imageService.downloadImage(image));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        long idImage = updateAd.getImage().getId();
+        updateAd.setImage(imageService.downloadImage(image));
+        imageService.deleteImage(idImage);
         adRepository.save(updateAd);
-        return "ads/" + adId + "/image";
+        return adsMapper.adToAdsDTO(updateAd).getImage();
     }
 
     @Override
-    public byte[] getImage(Long id) {
-        return adRepository.findById(id).orElseThrow(AdNotFoundException::new).getImage().getData();
+    public byte[] getAdImage(Long adId){
+        log.info("Get image of an AD with a ID:" + adId);
+        return imageService.getImage(adRepository.findById(adId).orElseThrow(AdNotFoundException::new).getImage().getId());
     }
 }
