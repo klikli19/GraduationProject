@@ -2,6 +2,7 @@ package ru.skypro.homework.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CreateCommentDTO;
@@ -13,7 +14,7 @@ import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
 
     CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
@@ -21,9 +22,6 @@ public interface CommentMapper {
     @Mapping(source = "author.id", target = "author")
     @Mapping(source = "author.image", target = "authorImage")
     @Mapping(source = "author.firstName", target = "authorFirstName")
-    @Mapping(source = "createdAt", target = "createdAt")
-    @Mapping(source = "pk", target = "pk")
-    @Mapping(source = "text", target = "text")
     CommentDTO commentToCommentDTO(Comment comment);
 
     default Long createdAt(LocalDateTime value) {
@@ -40,8 +38,6 @@ public interface CommentMapper {
         return "users/me/" + image.getId();
     }
 
-
-    @Mapping(source = "text", target = "text")
     Comment createCommentDtoToComment(CreateCommentDTO createComment);
 
     List<CommentDTO> commentsToCommentsListDto(Collection<Comment> commentCollection);

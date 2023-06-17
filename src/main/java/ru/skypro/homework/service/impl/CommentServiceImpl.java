@@ -46,12 +46,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public void deleteComment(int adId, int commentId) {
-        commentRepository.deleteByIdAndAd_Id(adId, commentId);
+        commentRepository.deleteByPkAndAd_Id(adId, commentId);
     }
 
     @Override
     public CommentDTO updateComment(int adId, int commentId, Comment comment) {
-        Comment updatedComment = commentRepository.findByIdAndPk(adId, commentId);
+        Comment updatedComment = commentRepository.findByPkAndAd_Id(adId, commentId);
         updatedComment.setText(comment.getText());
 
         CommentDTO commentDTO = CommentMapper.INSTANCE.commentToCommentDTO(updatedComment);

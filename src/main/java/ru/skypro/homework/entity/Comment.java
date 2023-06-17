@@ -12,9 +12,8 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long pk;
     private LocalDateTime createdAt;
-    private int pk;
     private String text;
     @ManyToOne
     private Ad ad;
