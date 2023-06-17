@@ -25,7 +25,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseWrapperComment getAllComments(int idAd) {
-        List<Comment> comments = (List<Comment>) commentRepository.findByAd_Id(idAd);
+        List<Comment> comments = commentRepository.findByAd_Id(idAd);
         List<CommentDTO> commentDTOList = CommentMapper.INSTANCE.commentsToCommentsListDto(comments);
 
         ResponseWrapperComment wrapperComment = new ResponseWrapperComment();
