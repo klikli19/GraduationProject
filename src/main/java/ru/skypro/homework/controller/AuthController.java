@@ -23,7 +23,6 @@ import static ru.skypro.homework.constant.Role.USER;
 public class AuthController {
 
     private final AuthService authService;
-    private final UserMapper userMapper;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReq req) {
@@ -33,13 +32,6 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
-
-//    @PostMapping("/register")
-//    public ResponseEntity<?> register(@RequestBody RegisterReq req) {
-//        authService.register(userMapper.toEntity(req));
-//
-//        return ResponseEntity.ok().build();
-//    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterReq req) {
