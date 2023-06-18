@@ -25,7 +25,7 @@ public interface CommentMapper {
     @Mapping(target = "authorImage", expression = "java(image(comment))")
     @Mapping(source = "author.firstName", target = "authorFirstName")
     @Mapping(source = "id", target = "pk")
-    CommentDTO commentToCommentDTO(Comment comment);
+    CommentDTO toCommentDTO(Comment comment);
 
     default Long createdAt(LocalDateTime value) {
         if (value == null) {
@@ -35,12 +35,13 @@ public interface CommentMapper {
     }
 
     default String image(Comment comment) {
-        return "users/" + comment.getAuthor().getId() + "/image";
+        int id = comment.getAuthor().getId().intValue();
+        return "users/" + id + "/image";
     }
 
-    Comment createCommentDtoToComment(CreateCommentDTO createComment);
+    Comment toComment(CreateCommentDTO createComment);
 
-    List<CommentDTO> commentsToCommentsListDto(Collection<Comment> commentCollection);
+    List<CommentDTO> toCommentsListDto(Collection<Comment> commentCollection);
 
 }
 
