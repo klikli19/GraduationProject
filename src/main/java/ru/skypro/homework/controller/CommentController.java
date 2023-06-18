@@ -10,6 +10,7 @@ import ru.skypro.homework.dto.CreateCommentDTO;
 import ru.skypro.homework.dto.ResponseWrapper;
 import ru.skypro.homework.dto.ResponseWrapperComment;
 import ru.skypro.homework.entity.Comment;
+import ru.skypro.homework.service.CommentService;
 import ru.skypro.homework.service.impl.CommentServiceImpl;
 
 import java.util.Collection;
@@ -21,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("ads")
 public class CommentController {
-    private final CommentServiceImpl commentService;
+    private final CommentService commentService;
 
     @GetMapping("{id}/comments")
     public ResponseEntity<ResponseWrapperComment> getAllComments (@PathVariable int id) {

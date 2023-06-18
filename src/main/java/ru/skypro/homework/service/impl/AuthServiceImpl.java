@@ -43,14 +43,4 @@ public class AuthServiceImpl implements AuthService {
     return true;
   }
 
-
-//  @Override
-//  public boolean register(User user) {
-//    if (manager.userExists(user.getEmail())) {
-//      return false;
-//    }
-//    user.setRole(Role.USER);
-//    userRepository.save(user);
-//    return true;
-//  }
 }
