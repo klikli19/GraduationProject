@@ -24,8 +24,8 @@ public class Ad {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @OneToMany
-    private List<Comment> comment;
+//    @OneToMany
+//    private List<Comment> comment;
 
     @Override
     public String toString() {
