@@ -31,12 +31,13 @@ public interface CommentMapper {
         if (value == null) {
             return 0L;
         }
-        return value.toInstant(ZoneOffset.UTC).toEpochMilli();
+        value = LocalDateTime.now();
+        return value.toInstant(ZoneOffset.ofHours(3)).toEpochMilli();
     }
 
     default String image(Comment comment) {
         int id = comment.getAuthor().getId().intValue();
-        return "users/" + id + "/image";
+        return "/users/" + id + "/image";
     }
 
     Comment toComment(CreateCommentDTO createComment);
