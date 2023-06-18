@@ -31,7 +31,7 @@ public class User {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @OneToMany
-    private List<Comment> comment;
+//    @OneToMany
+//    private List<Comment> comment;
 
 }
