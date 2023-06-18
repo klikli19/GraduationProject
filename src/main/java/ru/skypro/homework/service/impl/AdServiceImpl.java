@@ -89,7 +89,8 @@ public class AdServiceImpl implements AdService {
             return null;
         }
 
-        Ad ad = adsMapper.adsDtoToAd(createAdsDTO);
+        Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
+        adsMapper.updateAds(createAdsDTO,ad);
         adRepository.save(ad);
 
         return adsMapper.adToAdsDTO(ad);
