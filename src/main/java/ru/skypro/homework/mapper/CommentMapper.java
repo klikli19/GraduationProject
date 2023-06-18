@@ -31,7 +31,6 @@ public interface CommentMapper {
         if (value == null) {
             return 0L;
         }
-        value = LocalDateTime.now();
         return value.toInstant(ZoneOffset.ofHours(3)).toEpochMilli();
     }
 
