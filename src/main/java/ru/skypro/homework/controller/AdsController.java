@@ -11,13 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.AdService;
 
-import java.util.Collection;
+import java.io.IOException;
 
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("ads")
+@RequestMapping("/ads")
 public class AdsController {
     private final AdService adService;
 
@@ -36,41 +36,40 @@ public class AdsController {
         return ResponseEntity.ok(adService.createAd(createAdsDTO,image,authentication));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAd(@PathVariable int id){
         FullAdsDto fullAdsDto = adService.getFullAd((long) id);
         return ResponseEntity.ok(fullAdsDto);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable int id){
         adService.deleteAd((long)id);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<AdsDTO> updateAd(@PathVariable int id,
                                            @RequestBody CreateAdsDTO createAdsDTO){
         adService.updateAd(createAdsDTO,(long)id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("me")
+    @GetMapping("/me")
     public ResponseEntity<ResponseWrapper<AdsDTO>> getMeAd(@NotNull Authentication authentication){
         ResponseWrapper<AdsDTO> response =
                     new ResponseWrapper<>(adService.getUserAllAds(authentication));
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping(value = "{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateImageAd(@PathVariable int id, @RequestPart MultipartFile image){
-        adService.updateImage((long) id,image);
-        return ResponseEntity.ok().build();
+    @PatchMapping(value = "/{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateImageAd(@PathVariable int id, @RequestPart MultipartFile image) throws IOException {
+        return ResponseEntity.ok(adService.updateImage((long) id,image));
     }
 
-    @GetMapping("{id}/image")
-    public ResponseEntity<byte[]> getImage(@PathVariable int id){
-        return ResponseEntity.ok(adService.getImage((long) id));
+    @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable long id){
+        return ResponseEntity.ok(adService.getAdImage(id));
     }
 
 }

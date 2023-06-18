@@ -18,7 +18,6 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image downloadImage(MultipartFile imageFile) throws IOException {
         Image image = new Image();
-        image.setName(imageFile.getName());
         image.setMediaType(imageFile.getContentType());
         image.setFileSize(imageFile.getSize());
         image.setData(imageFile.getBytes());
@@ -26,12 +25,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void deleteImage(Image image) {
-        repository.delete(image);
+    public void deleteImage(Long id) {
+        repository.deleteById(id);
     }
 
     @Override
-    public Image getImage(Long id) {
-        return repository.findById(id).orElseThrow(ImageNotFoundException::new);
+    public byte[] getImage(Long id) {
+        return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
     }
 }
