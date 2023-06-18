@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDTO;
 import ru.skypro.homework.dto.UserDTO;
+import ru.skypro.homework.entity.User;
+import ru.skypro.homework.repository.ImageRepository;
+import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
 
 
@@ -30,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getAuthorizedUser(Authentication authentication) {
-        return ResponseEntity.ok(service.getAuthorizedUser(authentication));
+    public ResponseEntity<UserDTO> getAuthorizedUser(Authentication authentication) {
+        return ResponseEntity.ok(service.getAuthorizedUserDto(authentication));
     }
 
     @PatchMapping("/me")
@@ -43,5 +46,11 @@ public class UserController {
     public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile image, Authentication authentication) throws IOException {
         service.updateAvatar(image, authentication);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable long id){
+        log.info("Get user image with id" + id);
+        return ResponseEntity.ok(service.getUserImage(id));
     }
 }

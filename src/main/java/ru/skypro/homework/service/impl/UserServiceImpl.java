@@ -32,8 +32,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getAuthorizedUser(Authentication authentication) {
-        return UserMapper.INSTANCE.toDTO(userRepository.getUserByEmail(authentication.getName()));
+    public UserDTO getAuthorizedUserDto(Authentication authentication) {
+        return userMapper.toDTO(userRepository.getUserByEmail(authentication.getName()));
+    }
+
+    @Override
+    public User getAuthorizedUser(Authentication authentication) {
+        return userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -47,11 +52,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateAvatar(MultipartFile image, Authentication authentication) throws IOException {
         User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
-        if (user.getImage() != null) {
-            imageService.deleteImage(user.getImage());
-        }
+        /*if (user.getImage() != null) {
+            imageService.deleteImage(user.getImage().getId());
+        }*/
         user.setImage(imageService.downloadImage(image));
         userRepository.save(user);
         userMapper.toDTO(user);
+    }
+
+    @Override
+    public byte[] getUserImage(Long userId) {
+        return userRepository.findById(userId).get().getImage().getData();
     }
 }
