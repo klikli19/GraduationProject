@@ -2,7 +2,6 @@ package ru.skypro.homework.entity;
 
 import lombok.Data;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -24,8 +23,8 @@ public class Ad {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @OneToMany
-    private List<Comment> comment;
+//    @OneToMany
+//    private List<Comment> comment;
 
     @Override
     public String toString() {

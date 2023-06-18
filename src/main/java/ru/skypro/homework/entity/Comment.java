@@ -14,7 +14,6 @@ public class Comment {
     @Column(name = "id", nullable = false)
     private Long id;
     private LocalDateTime createdAt;
-    private int pk;
     private String text;
     @ManyToOne
     private Ad ad;

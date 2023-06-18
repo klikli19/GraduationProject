@@ -47,9 +47,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateAvatar(MultipartFile image, Authentication authentication) throws IOException {
         User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
-        /*if (user.getImage() != null) {
-            imageService.deleteImage(user.getImage().getId());
-        }*/
         user.setImage(imageService.downloadImage(image));
         userRepository.save(user);
         userMapper.toDTO(user);
