@@ -23,6 +23,16 @@ import java.util.Collection;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
+/**
+ * Servic AdServiceImpl
+ * Service for get all Ads, create Ad, get full Ad, delete Ad,
+ * update Ad, get User all Ads, update Image, get Ad Image
+ * @see AdsMapper
+ * @see AdRepository
+ * @see ImageService
+ * @see UserService
+ * @author Marina Gubina
+ */
 @Service
 @RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
@@ -31,8 +41,17 @@ public class AdServiceImpl implements AdService {
     private final AdRepository adRepository;
     private final ImageService imageService;
     private final UserService userService;
+    /**
+     * Field: The object that fires log events.
+     */
     private final Logger log = LoggerFactory.getLogger(AdServiceImpl.class);
 
+    /**
+     * Method for getting all ads
+     *
+     * @param title available ads
+     * @return list of ads
+     */
     @Override
     public Collection<AdsDTO> getAllAds(String title) {
         log.info("Request to receive all ads");
@@ -46,6 +65,14 @@ public class AdServiceImpl implements AdService {
         return adsMapper.adsToAdsListDto(ads);
     }
 
+    /**
+     * method for creating an ad
+     *
+     * @param createAdsDTO a DTO declaration is created
+     * @param image product image
+     * @param authentication verification procedure
+     * @return created ad in DTO ad
+     */
     @Override
     public AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication) {
         if (createAdsDTO.getPrice() < 0){
@@ -67,6 +94,12 @@ public class AdServiceImpl implements AdService {
         return adsMapper.adToAdsDTO(ad);
     }
 
+    /**
+     * method of getting full advertising
+     *
+     * @param adId identifier ads
+     * @return we get full information about the ad
+     */
     @Override
     public FullAdsDto getFullAd(Long adId) {
         log.info("Request to get full info about ad");
@@ -74,6 +107,11 @@ public class AdServiceImpl implements AdService {
         return adsMapper.adToFullAdsDto(ad);
     }
 
+    /**
+     * method that removes the ad
+     *
+     * @param adId identifier ads
+     */
     @Override
     public void deleteAd(Long adId) {
         log.info("Request to delete ad by id");
@@ -85,6 +123,13 @@ public class AdServiceImpl implements AdService {
         }
     }
 
+    /**
+     * method of getting full advertising
+     *
+     * @param createAdsDTO a DTO declaration is created
+     * @param adId identifier ads
+     * @return displays the updated ad
+     */
     @Override
     public AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId) {
         log.info("Request to update ad by id");
@@ -102,6 +147,12 @@ public class AdServiceImpl implements AdService {
         return adsMapper.adToAdsDTO(ad);
     }
 
+    /**
+     * the method outputs all the user's ads
+     *
+     * @param authentication verification procedure
+     * @return displays all the user's ads
+     */
     @Override
     public Collection<AdsDTO> getUserAllAds(Authentication authentication) {
         log.info("Request to get all user ads");
@@ -110,6 +161,13 @@ public class AdServiceImpl implements AdService {
         return adsMapper.adsToAdsListDto(ads);
     }
 
+    /**
+     * the method updates the product image
+     *
+     * @param adId identifier ads
+     * @param image product image
+     * @return displays an updated product image
+     */
     @Override
     public String updateImage(Long adId, MultipartFile image) throws IOException {
         log.info("Request to update image");
@@ -121,6 +179,12 @@ public class AdServiceImpl implements AdService {
         return adsMapper.adToAdsDTO(updateAd).getImage();
     }
 
+    /**
+     * the method outputs an image of the product by id
+     *
+     * @param adId identifier ads
+     * displays an image of the product by its id
+     */
     @Override
     public byte[] getAdImage(Long adId){
         log.info("Get image of an AD with a ID:" + adId);
