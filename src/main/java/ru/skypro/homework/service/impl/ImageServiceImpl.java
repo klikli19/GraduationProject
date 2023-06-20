@@ -18,7 +18,6 @@ public class ImageServiceImpl implements ImageService {
     public Image downloadImage(MultipartFile imageFile) throws IOException {
         Image image = new Image();
         image.setMediaType(imageFile.getContentType());
-        image.setFileSize(imageFile.getSize());
         image.setData(imageFile.getBytes());
         return repository.save(image);
     }

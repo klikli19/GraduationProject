@@ -17,8 +17,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    private long fileSize;
     private String mediaType;
-    //@Lob
+//    @Lob
     private byte[] data;
 }
