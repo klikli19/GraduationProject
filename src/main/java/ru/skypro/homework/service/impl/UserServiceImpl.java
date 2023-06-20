@@ -14,6 +14,16 @@ import ru.skypro.homework.service.UserService;
 
 import java.io.IOException;
 
+/**
+ * Servic UserServiceImpl
+ * Service for the implementation of the user service
+ *
+ * @see UserRepository
+ * @see UserMapper
+ * @see ImageServiceImpl
+ * @author Kilikova Anna
+ * @author Marina Gubina
+ */
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -21,21 +31,42 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final ImageServiceImpl imageService;
 
+    /**
+     * The method shows the user update
+     * @param userDTO user DTO
+     * @param authentication user identification
+     * @return null
+     */
     @Override
     public UserDTO updateUser(UserDTO userDTO, Authentication authentication) {
         return null;
     }
 
+    /**
+     * The method authorizes the user DTO
+     * @param authentication user identification
+     * @return outputs an authorized DTO user
+     */
     @Override
     public UserDTO getAuthorizedUserDto(Authentication authentication) {
         return userMapper.toDTO(userRepository.getUserByEmail(authentication.getName()));
     }
 
+    /**
+     * The method authorizes the user
+     * @param authentication user identification
+     * @return outputs an authorized user
+     */
     @Override
     public User getAuthorizedUser(Authentication authentication) {
         return userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
     }
 
+    /**
+     * The method will change the password
+     * @param newPasswordDTO new DTO password
+     * @param authentication user identification
+     */
     @Override
     public void changePassword(NewPasswordDTO newPasswordDTO, Authentication authentication) {
         User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
@@ -44,6 +75,12 @@ public class UserServiceImpl implements UserService {
         userMapper.toDTO(user);
     }
 
+    /**
+     * The method updates the avatar
+     * @param image product image
+     * @param authentication user identification
+     * @throws IOException exclusion of input output
+     */
     @Override
     public void updateAvatar(MultipartFile image, Authentication authentication) throws IOException {
         User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
@@ -52,6 +89,11 @@ public class UserServiceImpl implements UserService {
         userMapper.toDTO(user);
     }
 
+    /**
+     * The method gets the volume of the product image by the User ID
+     * @param userId User identification number
+     * @return outputs the volume of the product image by user ID
+     */
     @Override
     public byte[] getUserImage(Long userId) {
         return userRepository.findById(userId).get().getImage().getData();

@@ -167,6 +167,7 @@ public class AdServiceImpl implements AdService {
      * @param adId identifier ads
      * @param image product image
      * @return displays an updated product image
+     * @throws IOException Exclusion of input output
      */
     @Override
     public String updateImage(Long adId, MultipartFile image) throws IOException {
@@ -183,11 +184,11 @@ public class AdServiceImpl implements AdService {
      * the method outputs an image of the product by id
      *
      * @param adId identifier ads
-     * displays an image of the product by its id
+     * @return displays an image of the product by its id
      */
     @Override
     public byte[] getAdImage(Long adId){
         log.info("Get image of an AD with a ID:" + adId);
-        return imageService.getImage(adRepository.findById(adId).orElseThrow(AdNotFoundException::new).getImage().getId());
+        return imageService.getImageVolume(adRepository.findById(adId).orElseThrow(AdNotFoundException::new).getImage().getId());
     }
 }

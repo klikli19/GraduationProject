@@ -10,11 +10,25 @@ import ru.skypro.homework.service.ImageService;
 
 import java.io.IOException;
 
+/**
+ * Servic ImageServiceImpl
+ * Image Processing Service
+ *
+ * @see ImageRepository
+ * @author Rogozin Alexandr
+ * @author Kilikova Anna
+ */
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
 
+    /**
+     * The method loads the image
+     * @param imageFile product image
+     * @return displays the saved product image
+     * @throws IOException Exclusion of input output
+     */
     @Override
     public Image downloadImage(MultipartFile imageFile) throws IOException {
         Image image = new Image();
@@ -24,13 +38,23 @@ public class ImageServiceImpl implements ImageService {
         return repository.save(image);
     }
 
+    /**
+     * image removal method
+     *
+     * @param id image identification number
+     */
     @Override
     public void deleteImage(Long id) {
         repository.deleteById(id);
     }
 
+    /**
+     * the method outputs the image volume
+     * @param id image identification number
+     * @return returns the volume of the image
+     */
     @Override
-    public byte[] getImage(Long id) {
+    public byte[] getImageVolume(Long id) {
         return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
     }
 }
