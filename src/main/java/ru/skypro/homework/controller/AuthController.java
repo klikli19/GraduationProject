@@ -11,11 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.homework.dto.LoginReq;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.constant.Role;
-import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.service.AuthService;
 
 import static ru.skypro.homework.constant.Role.USER;
 
+/**
+ * Controller AuthController
+ * The controller is used for
+ * @see AuthService
+ * @author Kilikova Anna
+ */
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -24,6 +29,11 @@ public class AuthController {
 
     private final AuthService authService;
 
+    /**
+     * The method performs authorization
+     * @param req log in to the system
+     * @return displays authorization or prohibits login
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReq req) {
         if (authService.login(req.getUsername(), req.getPassword())) {
@@ -33,6 +43,11 @@ public class AuthController {
         }
     }
 
+    /**
+     * The method outputs a register to the user
+     * @param req log in to the system
+     * @return issues a register to the user or an incorrect request
+     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterReq req) {
         Role role = req.getRole() == null ? USER : req.getRole();
