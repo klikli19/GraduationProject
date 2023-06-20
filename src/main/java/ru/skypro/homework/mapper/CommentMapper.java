@@ -14,8 +14,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Interface CommentMapper
- * The interface is used to work with the database
+ * Mapper CommentMapper
+ * The mapper is used to work with the database
  * @author Bogomolov Ilya
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

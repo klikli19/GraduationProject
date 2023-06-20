@@ -12,8 +12,8 @@ import ru.skypro.homework.entity.Ad;
 import java.util.Collection;
 
 /**
- * Interface AdsMapper
- * The interface is used to work with the database
+ * Mapper AdsMapper
+ * The mapper is used to work with the database
  *
  * @author Gubina Marina
  */

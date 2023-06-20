@@ -10,8 +10,8 @@ import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 
 /**
- * Interface UserMapper
- * The interface is used to work with the database
+ * Mapper UserMapper
+ * The mapper is used to work with the database
  * @author Kilikova Anna
  * @author Marina Gubina
  */

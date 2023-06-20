@@ -7,8 +7,9 @@ import ru.skypro.homework.entity.User;
 import java.util.Optional;
 
 /**
- * Interface UserRepository
- * The interface is used to work with the database
+ * Repository UserRepository
+ * The repository is used to work with the database
+ * The repository is inherited from {@link JpaRepository}
  * @author Kilikova Anna
  */
 @Repository

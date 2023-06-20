@@ -4,8 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.skypro.homework.entity.Image;
 /**
- * Interface ImageRepository
- * The interface is used to work with the database
+ * Repository ImageRepository
+ * The repository is used to work with the database
+ * The repository is inherited from {@link JpaRepository}
  * @author Kilikova Anna
  */
 @Repository

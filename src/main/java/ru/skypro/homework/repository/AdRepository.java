@@ -10,9 +10,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Interface AdRepository
- * The interface is used to work with the database
- *
+ * Repository AdRepository
+ * The repository is used to work with the database
+ * The repository is inherited from {@link JpaRepository}
  * @author Gubina Marina
  */
 @Repository

@@ -6,8 +6,9 @@ import ru.skypro.homework.entity.Comment;
 import java.util.List;
 
 /**
- * Interface CommentRepository
- * The interface is used to work with the database
+ * Repository CommentRepository
+ * The repository is used to work with the database
+ * The repository is inherited from {@link JpaRepository}
  * @author Bogomolov Ilya
  */
 public interface CommentRepository extends JpaRepository<Comment, Long> {
