@@ -12,6 +12,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Class WebSecurityConfig
+ * Used to create a Bean to run the site
+ *
+ * @author Kilikova Anna
+ */
 @Configuration
 public class WebSecurityConfig {
 
@@ -24,6 +30,10 @@ public class WebSecurityConfig {
     "/register"
   };
 
+  /**
+   * The method creates a user information service
+   * @return displays information about the user in memory
+   */
   @Bean
   public InMemoryUserDetailsManager userDetailsService() {
     UserDetails user =
@@ -36,6 +46,12 @@ public class WebSecurityConfig {
     return new InMemoryUserDetailsManager(user);
   }
 
+  /**
+   * the method filters http
+   * @param http http
+   * @return outputs the collected http
+   * @throws Exception Exclusion of input output
+   */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf()
@@ -53,6 +69,10 @@ public class WebSecurityConfig {
     return http.build();
   }
 
+  /**
+   * the method encodes the password
+   * @return outputs the encoded password
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
