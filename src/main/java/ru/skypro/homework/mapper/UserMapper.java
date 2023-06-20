@@ -2,7 +2,6 @@ package ru.skypro.homework.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import ru.skypro.homework.dto.LoginReq;
 import ru.skypro.homework.dto.RegisterReq;
@@ -10,6 +9,12 @@ import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 
+/**
+ * Interface UserMapper
+ * The interface is used to work with the database
+ * @author Kilikova Anna
+ * @author Marina Gubina
+ */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 

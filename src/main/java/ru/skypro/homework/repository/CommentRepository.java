@@ -3,9 +3,13 @@ package ru.skypro.homework.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.skypro.homework.entity.Comment;
 
-import java.util.Collection;
 import java.util.List;
 
+/**
+ * Interface CommentRepository
+ * The interface is used to work with the database
+ * @author Bogomolov Ilya
+ */
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByAdId(long id);

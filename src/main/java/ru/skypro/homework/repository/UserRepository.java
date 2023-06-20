@@ -6,6 +6,11 @@ import ru.skypro.homework.entity.User;
 
 import java.util.Optional;
 
+/**
+ * Interface UserRepository
+ * The interface is used to work with the database
+ * @author Kilikova Anna
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 

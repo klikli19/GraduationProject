@@ -6,16 +6,18 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CreateCommentDTO;
-import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.entity.Comment;
-import ru.skypro.homework.entity.Image;
-import ru.skypro.homework.entity.User;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Interface CommentMapper
+ * The interface is used to work with the database
+ * @author Bogomolov Ilya
+ */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
 

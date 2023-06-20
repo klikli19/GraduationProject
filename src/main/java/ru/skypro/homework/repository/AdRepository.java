@@ -9,6 +9,12 @@ import ru.skypro.homework.entity.Ad;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Interface AdRepository
+ * The interface is used to work with the database
+ *
+ * @author Gubina Marina
+ */
 @Repository
 public interface AdRepository extends JpaRepository<Ad,Long> {
 

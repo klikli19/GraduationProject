@@ -8,6 +8,12 @@ import ru.skypro.homework.entity.User;
 
 import java.io.IOException;
 
+/**
+ * Interface UserService
+ * The interface is used to work with the database
+ * @author Kilikova Anna
+ * @author Marina Gubina
+ */
 public interface UserService {
 
     UserDTO updateUser(UserDTO userDTO, Authentication authentication);
