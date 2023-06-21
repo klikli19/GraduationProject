@@ -12,7 +12,9 @@ import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +60,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public byte[] getUserImage(Long userId) {
-        return userRepository.findById(userId).get().getImage().getData();
+    public byte[] getUserImage(Long userId) throws IOException {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        if(user.getImage() != null){
+            return user.getImage().getData();
+        }
+        else{
+            File emptyAvatar = new File("src/main/resources/static/emptyAvatar.png");
+            return Files.readAllBytes(emptyAvatar.toPath());
+        }
     }
 }
