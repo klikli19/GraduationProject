@@ -88,14 +88,11 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId) {
         log.info("Request to update ad by id");
-        if(adId == null || adRepository.findById(adId).isEmpty()){
-            return null;
-        }
         if (createAdsDTO.getPrice() < 0){
             throw new IllegalArgumentException("Price cannot be negative");
         }
-
         Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
+
         adsMapper.updateAds(createAdsDTO,ad);
         adRepository.save(ad);
 
