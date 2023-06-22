@@ -12,7 +12,6 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @author Kilikova Anna
  * @author Rogozin Alexandr
  */
-
 @Entity
 @Data
 @NoArgsConstructor

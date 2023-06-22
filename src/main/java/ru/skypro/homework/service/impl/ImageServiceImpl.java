@@ -1,6 +1,8 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.entity.Image;
@@ -23,6 +25,7 @@ import java.io.IOException;
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
 
+    private final static Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
     /**
      * The method loads the image
      * @param imageFile product image
@@ -56,5 +59,17 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public byte[] getImageVolume(Long id) {
         return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
+    }
+    @Override
+    public byte[] upDateImage(Long id){
+       log.info("Request to update the image {}", id);
+        if (id != null) {
+            byte[] bytes= getImageVolume(id);
+            if (bytes != null) {
+                return bytes;
+            }
+        }
+        log.error("The image update did not happen");
+        throw new ImageNotFoundException();
     }
 }
