@@ -3,25 +3,36 @@ package ru.skypro.homework.configuration;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import javax.sql.DataSource;
 
 @Configuration
+@EnableWebMvc
 public class WebSecurityConfig {
 
   private static final String[] AUTH_WHITELIST = {
-    "/swagger-resources/**",
-    "/swagger-ui.html",
-    "/v3/api-docs",
-    "/webjars/**",
-    "/login",
-    "/register"
+          "/ads",
+          "/ads/**",
+          "/login",
+          "/register",
+          "/swagger-resources/**",
+          "/swagger-ui.html",
+          "/users/**",
+          "/v3/api-docs",
+          "/webjars/**"
   };
 
   @Bean
@@ -35,6 +46,18 @@ public class WebSecurityConfig {
             .build();
     return new InMemoryUserDetailsManager(user);
   }
+
+  @Bean
+  public DataSource getDataSource()
+  {
+    DriverManagerDataSource dataSource =  new DriverManagerDataSource();
+    dataSource.setDriverClassName("org.postgresql.Driver");
+    dataSource.setUrl("jdbc:postgresql://localhost:5432/GraduationProject");
+//    dataSource.setUsername("root");
+//    dataSource.setPassword("root");
+    return dataSource;
+  }
+
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
