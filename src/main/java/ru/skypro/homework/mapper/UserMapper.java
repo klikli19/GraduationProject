@@ -18,7 +18,6 @@ public interface UserMapper {
     @Mapping(target = "image", source = "image")
     User toEntity(UserDTO dto);
 
-    //@Mapping(target = "image", source = "image", qualifiedByName = "imageMapping")
     @Mapping(target = "image",expression = "java(imageMapper(entity))")
     UserDTO toDTO(User entity);
 
@@ -27,16 +26,6 @@ public interface UserMapper {
     }
 
     Image map(String value);
-
-    /*
-    @Named("imageMapping")
-    default String image(Image image) {
-        if (image == null) {
-            return "";
-        }
-        return "/users/me/image";
-                //+ image.getId();
-    }*/
 
     User toEntity(LoginReq dto);
 
