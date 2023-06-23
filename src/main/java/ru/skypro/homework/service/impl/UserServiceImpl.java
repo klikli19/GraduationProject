@@ -3,6 +3,7 @@ package ru.skypro.homework.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDTO;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final ImageServiceImpl imageService;
+    private final PasswordEncoder encoder;
 
     @Override
     public UserDTO updateUser(UserDTO userDTO, Authentication authentication) {
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService {
     public void changePassword(NewPasswordDTO newPasswordDTO, Authentication authentication) {
         log.info("Request to change password");
         User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
-        user.setPassword(newPasswordDTO.getNewPassword());
+        user.setPassword(encoder.encode(newPasswordDTO.getNewPassword()));
         userRepository.save(user);
         userMapper.toDTO(user);
     }

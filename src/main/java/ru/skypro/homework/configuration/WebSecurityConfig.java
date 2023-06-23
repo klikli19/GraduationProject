@@ -36,30 +36,6 @@ public class WebSecurityConfig {
   };
 
   @Bean
-  public InMemoryUserDetailsManager userDetailsService() {
-    UserDetails user =
-        User.builder()
-            .username("user@gmail.com")
-            .password("password")
-            .passwordEncoder((plainText) -> passwordEncoder().encode(plainText))
-            .roles("USER")
-            .build();
-    return new InMemoryUserDetailsManager(user);
-  }
-
-  @Bean
-  public DataSource getDataSource()
-  {
-    DriverManagerDataSource dataSource =  new DriverManagerDataSource();
-    dataSource.setDriverClassName("org.postgresql.Driver");
-    dataSource.setUrl("jdbc:postgresql://localhost:5432/GraduationProject");
-//    dataSource.setUsername("root");
-//    dataSource.setPassword("root");
-    return dataSource;
-  }
-
-
-  @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf()
         .disable()

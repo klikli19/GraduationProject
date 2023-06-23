@@ -21,13 +21,12 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-  private final UserDetailsManager manager;
+  private final MyUserDetailsService manager;
 
   private final PasswordEncoder encoder;
   private final UserRepository userRepository;
   private final UserMapper userMapper;
 
-  private DataSource dataSource;
 
 
 //  @Override
@@ -37,25 +36,18 @@ public class AuthServiceImpl implements AuthService {
 //            userRepository.findByPassword(password).isEmpty()) {
 //      return false;
 //    }
-//    UserDetails userDetails = manager.loadUserByUsername(userName);
-//    return encoder.matches(password, userDetails.getPassword());
+//
+//    return true;
 //  }
 
   @Override
   public boolean login(String userName, String password) {
-//    if (!manager.userExists(userName)) {
-//      return false;
-//    }
-
-//    return encoder.matches(password, userDetails.getPassword());
-    JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
-
-    jdbcUserDetailsManager.setDataSource(dataSource);
-    if (jdbcUserDetailsManager.userExists(userName)) {
-      UserDetails userDetails = manager.loadUserByUsername(userName);
-      return encoder.matches(password,userDetails.getPassword());
+    UserDetails userDetails = manager.loadUserByUsername(userName);
+    boolean passwordCheck = encoder.matches(password, userDetails.getPassword());
+    if (!passwordCheck) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   @Override
