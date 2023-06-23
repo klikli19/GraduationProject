@@ -28,26 +28,11 @@ public class AuthServiceImpl implements AuthService {
   private final UserMapper userMapper;
 
 
-
-//  @Override
-//  public boolean login(String userName, String password) {
-//    log.info("login");
-//    if (userRepository.findByPassword(password).isEmpty() &&
-//            userRepository.findByPassword(password).isEmpty()) {
-//      return false;
-//    }
-//
-//    return true;
-//  }
-
   @Override
   public boolean login(String userName, String password) {
     UserDetails userDetails = manager.loadUserByUsername(userName);
     boolean passwordCheck = encoder.matches(password, userDetails.getPassword());
-    if (!passwordCheck) {
-      return false;
-    }
-    return true;
+    return passwordCheck;
   }
 
   @Override
