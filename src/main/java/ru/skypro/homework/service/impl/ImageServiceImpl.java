@@ -16,9 +16,9 @@ import java.io.IOException;
  * Servic ImageServiceImpl
  * Image Processing Service
  *
- * @see ImageRepository
  * @author Rogozin Alexandr
  * @author Kilikova Anna
+ * @see ImageRepository
  */
 @Service
 @RequiredArgsConstructor
@@ -26,8 +26,10 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
 
     private final static Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
+
     /**
      * The method loads the image
+     *
      * @param imageFile product image
      * @return displays the saved product image
      * @throws IOException Exclusion of input output
@@ -52,20 +54,27 @@ public class ImageServiceImpl implements ImageService {
 
     /**
      * the method outputs the image volume
+     *
      * @param id image identification number
      * @return returns the volume of the image
      */
-    @Override
+        @Override
     public byte[] getImageVolume(Long id) {
         return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
     }
+
+    public Image getImage(Long id) {
+        return repository.findById(id).orElseThrow(ImageNotFoundException::new);
+    }
+
     @Override
-    public byte[] upDateImage(Long id){
-       log.info("Request to update the image {}", id);
+    public Image updateImageAd(Long id, MultipartFile file) {
+        log.info("Request to update the image {}", id);
         if (id != null) {
-            byte[] bytes= getImageVolume(id);
-            if (bytes != null) {
-                return bytes;
+            Image image = getImage(id);
+            if (image != null) {
+                image.setMediaType(file.getContentType());
+                return repository.save(image);
             }
         }
         log.error("The image update did not happen");
