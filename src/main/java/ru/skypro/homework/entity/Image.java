@@ -26,10 +26,10 @@ public class Image {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    /**
-     * Field: file size
-     */
-    private long fileSize;
+//    /**
+//     * Field: file size
+//     */
+//    private long fileSize;
     /**
      * Field: file type
      */

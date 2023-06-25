@@ -10,7 +10,17 @@ import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.ImageService;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Iterator;
 
 /**
  * Servic ImageServiceImpl
@@ -58,7 +68,7 @@ public class ImageServiceImpl implements ImageService {
      * @param id image identification number
      * @return returns the volume of the image
      */
-        @Override
+    @Override
     public byte[] getImageVolume(Long id) {
         return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
     }
@@ -67,6 +77,13 @@ public class ImageServiceImpl implements ImageService {
         return repository.findById(id).orElseThrow(ImageNotFoundException::new);
     }
 
+    /**
+     * The method outputs an updated product image
+     *
+     * @param id   image identification number
+     * @param file
+     * @return displays an updated product image
+     */
     @Override
     public Image updateImageAd(Long id, MultipartFile file) {
         log.info("Request to update the image {}", id);
@@ -79,5 +96,45 @@ public class ImageServiceImpl implements ImageService {
         }
         log.error("The image update did not happen");
         throw new ImageNotFoundException();
+    }
+
+    /**
+     * image volume compression method
+     * @param imageFile product image
+     * @return compressedImageFile or imageFile
+     * @throws IOException Exclusion of input output
+     */
+    public File compresssionImageAd(MultipartFile imageFile) throws IOException {
+        File input = new File(String.valueOf(downloadImage(imageFile)));
+
+        BufferedImage image = ImageIO.read(input);
+
+        int standard = 1048576;
+        if (imageFile.getSize() >= standard) {
+
+            File compressedImageFile = new File("compressed_" + downloadImage(imageFile));
+            OutputStream os = new FileOutputStream(compressedImageFile);
+
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+
+            ImageOutputStream ios = ImageIO.createImageOutputStream(os);
+            writer.setOutput(ios);
+
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            float coefficient = standard / (float) imageFile.getSize();
+
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(coefficient);
+            writer.write(null, new IIOImage(image, null, null), param);
+
+            os.close();
+            ios.close();
+            writer.dispose();
+
+            return compressedImageFile;
+        } else {
+            return (File) imageFile;
+        }
     }
 }
