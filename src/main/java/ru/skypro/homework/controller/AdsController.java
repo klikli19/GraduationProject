@@ -53,7 +53,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @GetMapping
     public ResponseEntity<ResponseWrapper<AdsDTO>> getAllAds(@RequestParam(required = false) String title){
@@ -82,7 +82,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDTO> createAds(@RequestPart("properties") @NotNull CreateAdsDTO createAdsDTO,
@@ -112,7 +112,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAd(@PathVariable int id){
@@ -140,7 +140,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable int id){
@@ -168,7 +168,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDTO> updateAd(@PathVariable int id,
@@ -197,7 +197,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @GetMapping("/me")
     public ResponseEntity<ResponseWrapper<AdsDTO>> getMeAd(@NotNull Authentication authentication){
@@ -226,7 +226,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @PatchMapping(value = "/{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateImageAd(@PathVariable int id, @RequestPart MultipartFile image) throws IOException {
@@ -253,7 +253,7 @@ public class AdsController {
                             )
                     )
             },
-            tags = "ads"
+            tags = "AdsDTO"
     )
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable long id){
