@@ -1,6 +1,10 @@
 package ru.skypro.homework.controller;
 
 import com.sun.istack.NotNull;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -29,11 +33,28 @@ import java.io.IOException;
 public class AdsController {
     private final AdService adService;
 
-    /**
-     * the method gives all the declarations
-     * @param title title
-     * @return displays all ads
-     */
+    @Operation(
+            summary = "get all ads",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "all ads received",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "no ads received",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @GetMapping
     public ResponseEntity<ResponseWrapper<AdsDTO>> getAllAds(@RequestParam(required = false) String title){
         ResponseWrapper<AdsDTO> response =
@@ -41,13 +62,28 @@ public class AdsController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * The method creates ads
-     * @param createAdsDTO creating an ad
-     * @param image product image
-     * @param authentication authentication
-     * @return displays the created ad
-     */
+    @Operation(
+            summary = "creates ads",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "the ad has been created",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "does not create ads",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDTO> createAds(@RequestPart("properties") @NotNull CreateAdsDTO createAdsDTO,
                                             @RequestPart MultipartFile image,
@@ -56,34 +92,84 @@ public class AdsController {
         return ResponseEntity.ok(adService.createAd(createAdsDTO,image,authentication));
     }
 
-    /**
-     * The method issues an ad
-     * @param id ad identification number
-     * @return displays the ad by id
-     */
+    @Operation(
+            summary = "get Ad",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "ad received",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "don't get Ad",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAd(@PathVariable int id){
         FullAdsDto fullAdsDto = adService.getFullAd((long) id);
         return ResponseEntity.ok(fullAdsDto);
     }
 
-    /**
-     * The method deletes the ad by id
-     * @param id ad identification number
-     * @return deletes the selected ad by id
-     */
+    @Operation(
+            summary = "delete Ad",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "ad removed",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "the ad has not been deleted",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable int id){
         adService.deleteAd((long)id);
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * The method updates the ad by id
-     * @param id ad identification number
-     * @param createAdsDTO creates a product ad
-     * @return displays an updated product ad
-     */
+    @Operation(
+            summary = "update Ad",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "the ad has been updated",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "the ad has not been updated",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDTO> updateAd(@PathVariable int id,
                                            @RequestBody CreateAdsDTO createAdsDTO){
@@ -91,11 +177,28 @@ public class AdsController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * The method outputs the user's ads
-     * @param authentication authentication
-     * @return displays the user's ads
-     */
+    @Operation(
+            summary = "get my ads",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "my ads have been received",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "my ads have not been received",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @GetMapping("/me")
     public ResponseEntity<ResponseWrapper<AdsDTO>> getMeAd(@NotNull Authentication authentication){
         ResponseWrapper<AdsDTO> response =
@@ -103,23 +206,55 @@ public class AdsController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * The method updates the product image
-     * @param id ad identification number
-     * @param image product image
-     * @return displays an updated product image
-     * @throws IOException Exclusion of input output
-     */
+    @Operation(
+            summary = "update the ad image",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "the ad image has been updated",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "the ad image has not been updated",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @PatchMapping(value = "/{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateImageAd(@PathVariable int id, @RequestPart MultipartFile image) throws IOException {
         return ResponseEntity.ok(adService.updateImage((long) id,image));
     }
 
-    /**
-     * The method outputs an image of the product
-     * @param id ad identification number
-     * @return displays the product image
-     */
+    @Operation(
+            summary = "get an image by id",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "image received by id",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "image by id not received",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            },
+            tags = "ads"
+    )
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable long id){
         return ResponseEntity.ok(adService.getAdImage(id));
