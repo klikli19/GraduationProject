@@ -31,13 +31,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(UserDTO userDTO, Authentication authentication) {
-       log.info("Request to update user");
-       User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
-       user.setFirstName(userDTO.getFirstName());
-       user.setLastName(userDTO.getLastName());
-       user.setPhone(userDTO.getPhone());
-       userRepository.save(user);
-       return userMapper.toDTO(user);
+        log.info("Request to update user");
+        User user = userRepository.findByEmailIgnoreCase(authentication.getName()).orElseThrow(UserNotFoundException::new);
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setPhone(userDTO.getPhone());
+        userRepository.save(user);
+        return userMapper.toDTO(user);
     }
 
     @Override
@@ -72,16 +72,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public byte[] getUserImage(Long userId) throws IOException {
+        log.info("Request to getting image");
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        if(user.getImage() != null){
+        if (user.getImage() != null) {
             return user.getImage().getData();
-        }
-        else{
+        } else {
             File emptyAvatar = new File("src/main/resources/static/emptyAvatar.png");
             return Files.readAllBytes(emptyAvatar.toPath());
         }
-    public byte[] getUserImage(Long userId) {
-        log.info("Request to getting image");
-        return userRepository.findById(userId).get().getImage().getData();
     }
 }

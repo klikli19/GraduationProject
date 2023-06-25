@@ -1,30 +1,43 @@
-package ru.skypro.homework.service.impl;
+package ru.skypro.homework.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.skypro.homework.entity.User;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
+import ru.skypro.homework.dto.SecurityUserDto;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
+@Component
+@RequestScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
-    private final User user;
+public class MyUserDetails implements UserDetails {
+
+    private final SecurityUserDto securityUserDto;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()));
+        return Collections.singleton(new SimpleGrantedAuthority(
+                securityUserDto.getRole().toString()));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return Optional.ofNullable(securityUserDto)
+                .map(SecurityUserDto::getPassword)
+                .orElse(null);
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return Optional.ofNullable(securityUserDto)
+                .map(SecurityUserDto::getEmail)
+                .orElse(null);
     }
 
     @Override

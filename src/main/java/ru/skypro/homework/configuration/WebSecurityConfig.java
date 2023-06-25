@@ -3,34 +3,26 @@ package ru.skypro.homework.configuration;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import javax.sql.DataSource;
 
 @Configuration
-@EnableWebMvc
+@EnableWebSecurity
 public class WebSecurityConfig {
 
   private static final String[] AUTH_WHITELIST = {
           "/ads",
-          "/ads/**",
+          "/ads/*/image",
+          "/users/*/image",
           "/login",
           "/register",
           "/swagger-resources/**",
           "/swagger-ui.html",
-          "/users/**",
           "/v3/api-docs",
           "/webjars/**"
   };
@@ -42,7 +34,7 @@ public class WebSecurityConfig {
         .authorizeHttpRequests(
             (authorization) ->
                 authorization
-                    .mvcMatchers(AUTH_WHITELIST)
+                    .mvcMatchers(HttpMethod.GET, AUTH_WHITELIST)
                     .permitAll()
                     .mvcMatchers("/ads/**", "/users/**")
                     .authenticated())
