@@ -23,7 +23,8 @@ import static ru.skypro.homework.constant.Role.USER;
 
 /**
  * Controller AuthController
- * The controller is used for
+ * The controller is used for performs authorization, outputs the register to the user,
+ *
  * @see AuthService
  * @author Kilikova Anna
  */
