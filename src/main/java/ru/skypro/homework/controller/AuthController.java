@@ -1,8 +1,13 @@
 package ru.skypro.homework.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.homework.dto.LoginReq;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.constant.Role;
+import ru.skypro.homework.entity.User;
 import ru.skypro.homework.service.AuthService;
 
 import static ru.skypro.homework.constant.Role.USER;
@@ -29,11 +35,28 @@ public class AuthController {
 
     private final AuthService authService;
 
-    /**
-     * The method performs authorization
-     * @param req log in to the system
-     * @return displays authorization or prohibits login
-     */
+    @Operation(
+            summary = "performs authorization",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "authorization completed",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = User.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "authorization failed",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = User.class)
+                            )
+                    )
+            },
+            tags = "User"
+    )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReq req) {
         if (authService.login(req.getUsername(), req.getPassword())) {
@@ -43,11 +66,28 @@ public class AuthController {
         }
     }
 
-    /**
-     * The method outputs a register to the user
-     * @param req log in to the system
-     * @return issues a register to the user or an incorrect request
-     */
+    @Operation(
+            summary = "outputs the register to the user",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "the register is displayed to the user",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = User.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "the register is not displayed to the user",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = User.class)
+                            )
+                    )
+            },
+            tags = "User"
+    )
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterReq req) {
         Role role = req.getRole() == null ? USER : req.getRole();
