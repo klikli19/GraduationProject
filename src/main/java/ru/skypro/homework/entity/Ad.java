@@ -19,12 +19,9 @@ public class Ad {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     private Image image;
-
-//    @OneToMany
-//    private List<Comment> comment;
 
     @Override
     public String toString() {

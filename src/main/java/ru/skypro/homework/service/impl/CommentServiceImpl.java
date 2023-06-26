@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     public void deleteComment(int adId, int commentId) {
-        commentRepository.deleteByIdAndAdId(adId, commentId);
+        commentRepository.deleteByIdAndAdId(commentId, adId);
     }
 
     @Override
