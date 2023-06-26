@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable long id){
+    public ResponseEntity<byte[]> getImage(@PathVariable long id) throws IOException {
         log.info("Get user image with id" + id);
         return ResponseEntity.ok(service.getUserImage(id));
     }

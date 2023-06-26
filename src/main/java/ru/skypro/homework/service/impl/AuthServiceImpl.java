@@ -1,22 +1,24 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.constant.Role;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.security.MyUserDetailsService;
 import ru.skypro.homework.service.AuthService;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-  private final UserDetailsManager manager;
+  private final MyUserDetailsService manager;
 
   private final PasswordEncoder encoder;
 

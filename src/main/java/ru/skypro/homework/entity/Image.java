@@ -3,6 +3,7 @@ package ru.skypro.homework.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -18,6 +19,7 @@ public class Image {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String mediaType;
-//    @Lob
+    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;
 }
