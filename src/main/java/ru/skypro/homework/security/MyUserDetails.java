@@ -18,7 +18,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MyUserDetails implements UserDetails {
 
-    private final SecurityUserDto securityUserDto;
+    private SecurityUserDto securityUserDto;
+
+    public void setUserDto(SecurityUserDto userDto){
+        this.securityUserDto = userDto;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,5 +62,9 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Integer getIdUserDto(){
+        return securityUserDto.getId();
     }
 }

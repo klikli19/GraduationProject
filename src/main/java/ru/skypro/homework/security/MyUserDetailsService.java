@@ -16,6 +16,7 @@ import ru.skypro.homework.repository.UserRepository;
 public class MyUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final MyUserDetails userDetails;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -23,7 +24,8 @@ public class MyUserDetailsService implements UserDetailsService {
                         .map(userMapper::toSecurityDto)
                         .orElseThrow(() -> new UsernameNotFoundException("no username"));
         log.info("load User By Username");
-        return new MyUserDetails(securityUserDto);
+        userDetails.setUserDto(securityUserDto);
+        return userDetails;
         /*if(user.isPresent()) {
             User user1 = user.get();
             log.info(String.valueOf(user1));
