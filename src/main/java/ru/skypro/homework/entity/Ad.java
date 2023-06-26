@@ -19,7 +19,7 @@ public class Ad {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "image_id")
     private Image image;
 
