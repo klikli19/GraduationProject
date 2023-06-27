@@ -84,7 +84,8 @@ public class AdServiceImpl implements AdService {
         log.info("Request to delete ad by id");
         Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
         if(checkAccess(ad)){
-            adRepository.deleteById(adId);
+        adRepository.deleteById(adId);
+        imageService.deleteImage(ad.getImage().getId());
         }
         else {
             throw new RuntimeException("Not access to delete ad");
@@ -110,6 +111,7 @@ public class AdServiceImpl implements AdService {
     public Collection<AdsDTO> getUserAllAds() {
         log.info("Request to get all user ads");
         Collection<Ad> ads;
+        log.info(userDetails.getIdUserDto() + "   "+ userDetails.getAuthorities() + "   " + userDetails.getUsername());
         ads = adRepository.findAllAdsByAuthorId(userDetails.getIdUserDto());
         return adsMapper.adsToAdsListDto(ads);
     }
@@ -118,8 +120,10 @@ public class AdServiceImpl implements AdService {
     public String updateImage(Long adId, MultipartFile image) throws IOException {
         log.info("Request to update image");
         Ad updateAd = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
+        log.info(checkAccess(updateAd)+"");
         if (checkAccess(updateAd)){
             long idImage = updateAd.getImage().getId();
+            log.info(idImage + "");
             updateAd.setImage(imageService.downloadImage(image));
             imageService.deleteImage(idImage);
             adRepository.save(updateAd);
@@ -134,7 +138,7 @@ public class AdServiceImpl implements AdService {
     }
 
     private boolean checkAccess(Ad ad){
-        if(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) return true;
+        if(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) return true;
         else{
             Long adAuthorId = ad.getAuthor().getId();
             Long userId = Long.valueOf(userDetails.getIdUserDto());

@@ -51,8 +51,7 @@ public class AdsController {
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDTO> updateAd(@PathVariable int id,
                                            @RequestBody CreateAdsDTO createAdsDTO){
-        adService.updateAd(createAdsDTO,(long)id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adService.updateAd(createAdsDTO,(long)id));
     }
 
     @GetMapping("/me")

@@ -1,6 +1,5 @@
 package ru.skypro.homework.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +14,6 @@ import java.util.Optional;
 
 @Component
 @RequestScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-@RequiredArgsConstructor
 public class MyUserDetails implements UserDetails {
 
     private SecurityUserDto securityUserDto;
@@ -24,10 +22,20 @@ public class MyUserDetails implements UserDetails {
         this.securityUserDto = userDto;
     }
 
+    public Integer getIdUserDto(){
+        return Optional.ofNullable(securityUserDto)
+                .map(SecurityUserDto::getId)
+                .orElse(null);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(
-                securityUserDto.getRole().toString()));
+        return Optional.ofNullable(securityUserDto)
+                        .map(SecurityUserDto::getRole)
+                        .map(role -> "ROLE_"+ role)
+                        .map(SimpleGrantedAuthority::new)
+                        .map(Collections::singleton)
+                        .orElseGet(Collections::emptySet);
     }
 
     @Override
@@ -62,9 +70,5 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Integer getIdUserDto(){
-        return securityUserDto.getId();
     }
 }
