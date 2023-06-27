@@ -22,7 +22,7 @@ public interface AdService {
    FullAdsDto getFullAd(Long adId);
    void deleteAd(Long adId);
    AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId);
-   Collection<AdsDTO> getUserAllAds(Authentication authentication);
+   Collection<AdsDTO> getUserAllAds();
    String updateImage(Long adId,MultipartFile image) throws IOException;
    byte[] getAdImage(Long adId);
 }

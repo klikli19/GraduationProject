@@ -4,12 +4,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -19,32 +18,36 @@ import org.springframework.security.web.SecurityFilterChain;
  * @author Kilikova Anna
  */
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
   private static final String[] AUTH_WHITELIST = {
-    "/swagger-resources/**",
-    "/swagger-ui.html",
-    "/v3/api-docs",
-    "/webjars/**",
-    "/login",
-    "/register"
+          "/ads",
+          "/ads/*/image",
+          "/users/*/image",
+          "/login",
+          "/register",
+          "/swagger-resources/**",
+          "/swagger-ui.html",
+          "/v3/api-docs",
+          "/webjars/**"
   };
 
-  /**
-   * The method creates a user information service
-   * @return displays information about the user in memory
-   */
-  @Bean
-  public InMemoryUserDetailsManager userDetailsService() {
-    UserDetails user =
-        User.builder()
-            .username("user@gmail.com")
-            .password("password")
-            .passwordEncoder((plainText) -> passwordEncoder().encode(plainText))
-            .roles("USER")
-            .build();
-    return new InMemoryUserDetailsManager(user);
-  }
+//  /**
+//   * The method creates a user information service
+//   * @return displays information about the user in memory
+//   */
+//  @Bean
+//  public InMemoryUserDetailsManager userDetailsService() {
+//    UserDetails user =
+//        User.builder()
+//            .username("user@gmail.com")
+//            .password("password")
+//            .passwordEncoder((plainText) -> passwordEncoder().encode(plainText))
+//            .roles("USER")
+//            .build();
+//    return new InMemoryUserDetailsManager(user);
+//  }
 
   /**
    * the method filters http
@@ -59,7 +62,7 @@ public class WebSecurityConfig {
         .authorizeHttpRequests(
             (authorization) ->
                 authorization
-                    .mvcMatchers(AUTH_WHITELIST)
+                    .mvcMatchers(HttpMethod.GET, AUTH_WHITELIST)
                     .permitAll()
                     .mvcMatchers("/ads/**", "/users/**")
                     .authenticated())

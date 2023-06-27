@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.AdsDTO;
 import ru.skypro.homework.dto.CreateAdsDTO;
@@ -14,12 +16,14 @@ import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.repository.AdRepository;
+import ru.skypro.homework.security.MyUserDetails;
 import ru.skypro.homework.service.AdService;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Objects;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -35,12 +39,14 @@ import static org.springframework.util.ObjectUtils.isEmpty;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AdServiceImpl implements AdService {
 
     private final AdsMapper adsMapper;
     private final AdRepository adRepository;
     private final ImageService imageService;
     private final UserService userService;
+    private final MyUserDetails userDetails;
     /**
      * Field: The object that fires log events.
      */
@@ -115,11 +121,12 @@ public class AdServiceImpl implements AdService {
     @Override
     public void deleteAd(Long adId) {
         log.info("Request to delete ad by id");
-        if(adRepository.existsById(adId)){
+        Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
+        if(checkAccess(ad)){
             adRepository.deleteById(adId);
         }
         else {
-            throw new AdNotFoundException();
+            throw new RuntimeException("Not access to delete ad");
         }
     }
 
@@ -133,16 +140,14 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId) {
         log.info("Request to update ad by id");
-        if(adId == null || adRepository.findById(adId).isEmpty()){
-            return null;
-        }
         if (createAdsDTO.getPrice() < 0){
             throw new IllegalArgumentException("Price cannot be negative");
         }
-
         Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
-        adsMapper.updateAds(createAdsDTO,ad);
-        adRepository.save(ad);
+        if (checkAccess(ad)){
+            adsMapper.updateAds(createAdsDTO,ad);
+            adRepository.save(ad);
+        }
 
         return adsMapper.adToAdsDTO(ad);
     }
@@ -150,14 +155,14 @@ public class AdServiceImpl implements AdService {
     /**
      * the method outputs all the user's ads
      *
-     * @param authentication verification procedure
+//     * @param authentication verification procedure
      * @return displays all the user's ads
      */
     @Override
-    public Collection<AdsDTO> getUserAllAds(Authentication authentication) {
+    public Collection<AdsDTO> getUserAllAds() {
         log.info("Request to get all user ads");
         Collection<Ad> ads;
-        ads = adRepository.findAllAdsByAuthorId(userService.getAuthorizedUserDto(authentication).getId());
+        ads = adRepository.findAllAdsByAuthorId(userDetails.getIdUserDto());
         return adsMapper.adsToAdsListDto(ads);
     }
 
@@ -173,10 +178,12 @@ public class AdServiceImpl implements AdService {
     public String updateImage(Long adId, MultipartFile image) throws IOException {
         log.info("Request to update image");
         Ad updateAd = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
-        long idImage = updateAd.getImage().getId();
-        updateAd.setImage(imageService.downloadImage(image));
-        imageService.deleteImage(idImage);
-        adRepository.save(updateAd);
+        if (checkAccess(updateAd)){
+            long idImage = updateAd.getImage().getId();
+            updateAd.setImage(imageService.downloadImage(image));
+            imageService.deleteImage(idImage);
+            adRepository.save(updateAd);
+        }
         return adsMapper.adToAdsDTO(updateAd).getImage();
     }
 
@@ -190,5 +197,15 @@ public class AdServiceImpl implements AdService {
     public byte[] getAdImage(Long adId){
         log.info("Get image of an AD with a ID:" + adId);
         return imageService.getImageVolume(adRepository.findById(adId).orElseThrow(AdNotFoundException::new).getImage().getId());
+    }
+
+    private boolean checkAccess(Ad ad){
+        if(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) return true;
+        else{
+            Long adAuthorId = ad.getAuthor().getId();
+            Long userId = Long.valueOf(userDetails.getIdUserDto());
+
+            return Objects.equals(userId, adAuthorId);
+        }
     }
 }

@@ -21,5 +21,5 @@ public interface UserService {
     User getAuthorizedUser(Authentication authentication);
     void changePassword(NewPasswordDTO newPasswordDTO, Authentication authentication);
     void updateAvatar(MultipartFile image, Authentication authentication) throws IOException;
-    byte[] getUserImage(Long adId);
+    byte[] getUserImage(Long adId) throws IOException;
 }

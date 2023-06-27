@@ -200,9 +200,9 @@ public class AdsController {
             tags = "AdsDTO"
     )
     @GetMapping("/me")
-    public ResponseEntity<ResponseWrapper<AdsDTO>> getMeAd(@NotNull Authentication authentication){
+    public ResponseEntity<ResponseWrapper<AdsDTO>> getMeAd(){
         ResponseWrapper<AdsDTO> response =
-                    new ResponseWrapper<>(adService.getUserAllAds(authentication));
+                    new ResponseWrapper<>(adService.getUserAllAds());
         return ResponseEntity.ok(response);
     }
 

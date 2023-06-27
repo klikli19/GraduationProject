@@ -1,10 +1,15 @@
 package ru.skypro.homework.entity;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.skypro.homework.constant.Role;
 
 import javax.persistence.*;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

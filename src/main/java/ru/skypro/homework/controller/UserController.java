@@ -114,7 +114,7 @@ public class UserController {
     )
     @PatchMapping("/me")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, Authentication authentication) {
-        return ResponseEntity.ok(service.updateUser(userDTO, authentication));
+        return ResponseEntity.ok( service.updateUser(userDTO, authentication));
     }
 
     @Operation(
@@ -168,7 +168,7 @@ public class UserController {
             tags = "UserDTO"
     )
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable long id) {
+    public ResponseEntity<byte[]> getImage(@PathVariable long id) throws IOException {
         log.info("Get user image with id" + id);
         return ResponseEntity.ok(service.getUserImage(id));
     }

@@ -2,6 +2,7 @@ package ru.skypro.homework.service.impl;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CreateCommentDTO;
 import ru.skypro.homework.dto.ResponseWrapperComment;
@@ -26,6 +27,7 @@ import java.util.List;
  * @author Kilikova Anna
  */
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
