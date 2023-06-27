@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,6 +43,7 @@ public class AdsController {
         return ResponseEntity.ok(fullAdsDto);
     }
 
+    @PreAuthorize("@adServiceImpl.getFullAd(#id).email == authentication.name or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable int id){
         adService.deleteAd((long)id);
