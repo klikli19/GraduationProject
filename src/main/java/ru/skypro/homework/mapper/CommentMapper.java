@@ -19,7 +19,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
 
-    CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
 
     @Mapping(source = "author.id", target = "author")
     @Mapping(target = "authorImage", expression = "java(image(comment))")

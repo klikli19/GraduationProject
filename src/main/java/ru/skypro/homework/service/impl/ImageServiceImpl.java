@@ -1,6 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import java.io.IOException;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
     @Override
