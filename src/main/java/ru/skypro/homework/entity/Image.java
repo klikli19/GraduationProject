@@ -27,10 +27,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-//    /**
-//     * Field: file size
-//     */
-//    private long fileSize;
+
     /**
      * Field: file type
      */
@@ -39,7 +36,7 @@ public class Image {
     /**
      * Field: image volume
      */
-    //@Lob
+
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;

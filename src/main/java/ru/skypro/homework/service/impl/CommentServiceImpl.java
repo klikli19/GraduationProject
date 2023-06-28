@@ -57,9 +57,6 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * The method outputs the addition of a comment
-     * @param id identification number
-     * @param comment user's comment
-     * @param authentication user identification
      * @return displays the added comment
      */
     @Override
@@ -91,8 +88,6 @@ public class CommentServiceImpl implements CommentService {
     /**
      * Update method comment
      * @param adId identifier ads
-     * @param commentId comment identification number
-     * @param commentDTO user's DTO comment
      * @return outputs the user's DTO comment
      */
     @Override

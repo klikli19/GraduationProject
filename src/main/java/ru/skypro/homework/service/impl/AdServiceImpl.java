@@ -191,7 +191,7 @@ public class AdServiceImpl implements AdService {
     @Override
     public byte[] getAdImage(Long adId){
         log.info("Get image of an AD with a ID:" + adId);
-        return imageService.getImageVolume(adRepository.findById(adId).orElseThrow(AdNotFoundException::new).getImage().getId());
+        return imageService.getImage(adRepository.findById(adId).orElseThrow(AdNotFoundException::new).getImage().getId());
     }
 
 }
