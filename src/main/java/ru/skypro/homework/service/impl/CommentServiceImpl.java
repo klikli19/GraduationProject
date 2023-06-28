@@ -1,6 +1,8 @@
 package ru.skypro.homework.service.impl;
 
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,8 @@ import java.util.List;
  */
 @Service
 @Transactional
+@Slf4j
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
@@ -37,19 +41,6 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final CommentMapper commentMapper;
 
-    /**
-     * Comment Service Implementation Constructor
-     * @param commentRepository comment repository
-     * @param adRepository ad repository
-     * @param userRepository user repository
-     * @param commentMapper comment display tool
-     */
-    public CommentServiceImpl(CommentRepository commentRepository, AdRepository adRepository, UserRepository userRepository, CommentMapper commentMapper) {
-        this.commentRepository = commentRepository;
-        this.adRepository = adRepository;
-        this.userRepository = userRepository;
-        this.commentMapper = commentMapper;
-    }
 
     /**
      * Method of getting all comments
@@ -94,7 +85,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentId comment identification number
      */
     public void deleteComment(int adId, int commentId) {
-        commentRepository.deleteByIdAndAdId(adId, commentId);
+        commentRepository.deleteByIdAndAdId(commentId, adId);
     }
 
     /**
