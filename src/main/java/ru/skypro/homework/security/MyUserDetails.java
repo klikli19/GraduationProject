@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Component
-@RequestScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+//@RequestScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class MyUserDetails implements UserDetails {
 
     private SecurityUserDto securityUserDto;

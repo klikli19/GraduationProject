@@ -50,6 +50,7 @@ public class AdsController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("@adServiceImpl.getFullAd(#id).email == authentication.name or hasRole('ADMIN')")
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDTO> updateAd(@PathVariable int id,
                                            @RequestBody CreateAdsDTO createAdsDTO){
@@ -63,6 +64,7 @@ public class AdsController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("@adServiceImpl.getFullAd(#id).email == authentication.name or hasRole('ADMIN')")
     @PatchMapping(value = "/{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateImageAd(@PathVariable int id, @RequestPart MultipartFile image) throws IOException {
         return ResponseEntity.ok(adService.updateImage((long) id,image));

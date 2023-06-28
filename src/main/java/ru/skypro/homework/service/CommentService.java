@@ -9,6 +9,7 @@ import ru.skypro.homework.entity.Comment;
 
 public interface CommentService {
     ResponseWrapperComment getAllComments(int id);
+    Comment getComment(long commentId);
 
     CommentDTO addComment(int id, CreateCommentDTO comment, Authentication authentication);
 
