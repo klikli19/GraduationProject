@@ -1,6 +1,8 @@
 package ru.skypro.homework.service.impl;
 
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ import java.util.List;
 
 @Service
 @Transactional
+@Slf4j
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
@@ -27,12 +31,6 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final CommentMapper commentMapper;
 
-    public CommentServiceImpl(CommentRepository commentRepository, AdRepository adRepository, UserRepository userRepository, CommentMapper commentMapper) {
-        this.commentRepository = commentRepository;
-        this.adRepository = adRepository;
-        this.userRepository = userRepository;
-        this.commentMapper = commentMapper;
-    }
 
     @Override
     public ResponseWrapperComment getAllComments(int idAd) {
