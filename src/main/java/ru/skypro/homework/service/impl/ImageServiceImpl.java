@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.exception.ImageNotFoundException;
@@ -32,6 +33,7 @@ import java.util.Iterator;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
 

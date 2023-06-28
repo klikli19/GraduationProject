@@ -13,10 +13,12 @@ import ru.skypro.homework.dto.ResponseWrapperComment;
  */
 public interface CommentService {
     ResponseWrapperComment getAllComments(int id);
+    Comment getComment(long commentId);
 
     CommentDTO addComment(int id, CreateCommentDTO comment, Authentication authentication);
 
     void deleteComment(int adId, int commentId);
+    void deleteAllByAdId(long adId);
 
     CommentDTO updateComment(int adId, int commentId, CommentDTO comment);
 

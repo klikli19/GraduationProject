@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,7 @@ import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CreateCommentDTO;
 import ru.skypro.homework.dto.ResponseWrapperComment;
 import ru.skypro.homework.entity.Comment;
+import ru.skypro.homework.exception.AdNotFoundException;
 import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
@@ -70,9 +72,15 @@ public class CommentServiceImpl implements CommentService {
      * @return displays the added comment
      */
     @Override
+    public Comment getComment(long commentId) {
+        return commentRepository.findById(commentId).orElseThrow();
+    }
+
+    @Override
     public CommentDTO addComment(int id, CreateCommentDTO comment, Authentication authentication) {
         Comment newComment = commentMapper.toComment(comment);
-        newComment.setAd(adRepository.findById((long) id).get());
+        newComment.setAd(adRepository.findById((long) id)
+                .orElseThrow(AdNotFoundException::new));
         newComment.setCreatedAt(LocalDateTime.now());
         newComment.setAuthor(userRepository.getUserByEmail(authentication.getName()));
         commentRepository.save(newComment);
@@ -97,10 +105,16 @@ public class CommentServiceImpl implements CommentService {
      * @return outputs the user's DTO comment
      */
     @Override
+    public void deleteAllByAdId(long adId) {
+        commentRepository.deleteAllByAdId(adId);
+    }
+
+    @Override
     public CommentDTO updateComment(int adId, int commentId, CommentDTO commentDTO) {
         Comment updatedComment = commentRepository.findByIdAndAd_Id(commentId, adId);
         updatedComment.setText(commentDTO.getText());
         commentRepository.save(updatedComment);
+
         return commentMapper.toCommentDTO(updatedComment);
     }
 }
