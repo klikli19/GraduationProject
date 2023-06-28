@@ -3,6 +3,7 @@ package ru.skypro.homework.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.CommentDTO;
@@ -35,7 +36,7 @@ public class CommentController {
                                                   Authentication authentication) {
         return ResponseEntity.ok(commentService.addComment(id, comment, authentication));
     }
-
+    @PreAuthorize("@commentServiceImpl.getComment(#commentId) == authentication.name or hasRole('ADMIN')")
     @DeleteMapping("{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment (@PathVariable int adId,
                                                @PathVariable int commentId) {
