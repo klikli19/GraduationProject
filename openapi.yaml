@@ -385,6 +385,25 @@ paths:
           description: Forbidden
         '401':
           description: Unauthorized
+    delete:
+      tags:
+        - Объявления
+      summary: 'Удалить картинку объявления'
+      operationId: deleteImage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
 
 components:
   schemas:

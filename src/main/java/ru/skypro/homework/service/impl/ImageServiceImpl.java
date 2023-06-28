@@ -54,6 +54,20 @@ public class ImageServiceImpl implements ImageService {
         return repository.save(image);
     }
 
+
+//    @Override
+//    public Image downloadImage(MultipartFile imageFile) throws IOException {
+//        Image image = new Image();
+//        image.setMediaType(imageFile.getContentType());
+////        image.setData(imageFile.getBytes());
+//        int standard = 1048576;
+//        if (imageFile.getSize() >= standard) {
+//            compresssionImageAd(imageFile);
+//        } else {
+//            return (File) imageFile;
+//        }
+//    }
+
     /**
      * image removal method
      *
@@ -70,12 +84,12 @@ public class ImageServiceImpl implements ImageService {
      * @param id image identification number
      * @return returns the volume of the image
      */
-    @Override
-    public byte[] getImageVolume(Long id) {
+    public byte[] getImage(Long id) {
         return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
     }
 
-    public Image getImage(Long id) {
+    public Image getImageAd(Long id) {
+
         return repository.findById(id).orElseThrow(ImageNotFoundException::new);
     }
 
@@ -90,7 +104,7 @@ public class ImageServiceImpl implements ImageService {
     public Image updateImageAd(Long id, MultipartFile file) {
         log.info("Request to update the image {}", id);
         if (id != null) {
-            Image image = getImage(id);
+            Image image = getImageAd(id);
             if (image != null) {
                 image.setMediaType(file.getContentType());
                 return repository.save(image);
@@ -102,6 +116,7 @@ public class ImageServiceImpl implements ImageService {
 
     /**
      * image volume compression method
+     *
      * @param imageFile product image
      * @return compressedImageFile or imageFile
      * @throws IOException Exclusion of input output
@@ -112,31 +127,27 @@ public class ImageServiceImpl implements ImageService {
         BufferedImage image = ImageIO.read(input);
 
         int standard = 1048576;
-        if (imageFile.getSize() >= standard) {
 
-            File compressedImageFile = new File("compressed_" + downloadImage(imageFile));
-            OutputStream os = new FileOutputStream(compressedImageFile);
+        File compressedImageFile = new File("compressed_" + downloadImage(imageFile));
+        OutputStream os = new FileOutputStream(compressedImageFile);
 
-            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
-            ImageWriter writer = writers.next();
+        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+        ImageWriter writer = writers.next();
 
-            ImageOutputStream ios = ImageIO.createImageOutputStream(os);
-            writer.setOutput(ios);
+        ImageOutputStream ios = ImageIO.createImageOutputStream(os);
+        writer.setOutput(ios);
 
-            ImageWriteParam param = writer.getDefaultWriteParam();
-            float coefficient = standard / (float) imageFile.getSize();
+        ImageWriteParam param = writer.getDefaultWriteParam();
+        float coefficient = standard / (float) imageFile.getSize();
 
-            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            param.setCompressionQuality(coefficient);
-            writer.write(null, new IIOImage(image, null, null), param);
+        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        param.setCompressionQuality(coefficient);
+        writer.write(null, new IIOImage(image, null, null), param);
 
-            os.close();
-            ios.close();
-            writer.dispose();
+        os.close();
+        ios.close();
+        writer.dispose();
 
-            return compressedImageFile;
-        } else {
-            return (File) imageFile;
-        }
+        return compressedImageFile;
     }
 }

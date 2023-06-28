@@ -16,7 +16,7 @@ public interface ImageService {
 
     void deleteImage(Long id);
 
-    byte[] getImageVolume(Long id);
+    byte[] getImage(Long id);
 
     Image updateImageAd(Long id, MultipartFile image);
 }
