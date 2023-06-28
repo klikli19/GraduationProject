@@ -13,6 +13,7 @@ public interface CommentService {
     CommentDTO addComment(int id, CreateCommentDTO comment, Authentication authentication);
 
     void deleteComment(int adId, int commentId);
+    void deleteAllByAdId(long adId);
 
     CommentDTO updateComment(int adId, int commentId, CommentDTO comment);
 
