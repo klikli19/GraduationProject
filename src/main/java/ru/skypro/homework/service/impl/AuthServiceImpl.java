@@ -16,56 +16,57 @@ import ru.skypro.homework.service.AuthService;
 /**
  * Servic AuthServiceImpl
  * Service for entering a name and password
-// * @see UserDetailsManager
+ *
+ * @author Kilikova Anna
+ * @see MyUserDetailsService
  * @see PasswordEncoder
  * @see UserRepository
  * @see UserMapper
- * @author Kilikova Anna
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-  private final MyUserDetailsService manager;
+    private final MyUserDetailsService manager;
 
-  private final PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  private final UserMapper userMapper;
+    private final UserMapper userMapper;
 
-  /**
-   * The method returns the username used for authentication
-   *
-   * @param userName user name
-   * @param password user password
-   * @return returns the user's password
-   */
-  @Override
-  public boolean login(String userName, String password) {
-    UserDetails userDetails = manager.loadUserByUsername(userName);
-    return encoder.matches(password, userDetails.getPassword());
-  }
-
-  /**
-   * The method determines whether the user's value is present in the register
-   *
-   * @param registerReq registration
-   * @param role role
-   * @return false - if the value is missing
-   * @return true - if the value is present
-   */
-  @Override
-  public boolean register(RegisterReq registerReq, Role role) {
-    if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
-      return false;
+    /**
+     * The method returns the username used for authentication
+     *
+     * @param userName user name
+     * @param password user password
+     * @return returns the user's password
+     */
+    @Override
+    public boolean login(String userName, String password) {
+        UserDetails userDetails = manager.loadUserByUsername(userName);
+        return encoder.matches(password, userDetails.getPassword());
     }
-    User regUser = userMapper.toEntity(registerReq);
-    regUser.setRole(role);
-    regUser.setPassword(encoder.encode(regUser.getPassword()));
-    userRepository.save(regUser);
-    return true;
-  }
+
+    /**
+     * The method determines whether the user's value is present in the register
+     *
+     * @param registerReq registration
+     * @param role        role
+     * @return false - if the value is missing
+     * @return true - if the value is present
+     */
+    @Override
+    public boolean register(RegisterReq registerReq, Role role) {
+        if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
+            return false;
+        }
+        User regUser = userMapper.toEntity(registerReq);
+        regUser.setRole(role);
+        regUser.setPassword(encoder.encode(regUser.getPassword()));
+        userRepository.save(regUser);
+        return true;
+    }
 
 }

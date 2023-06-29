@@ -35,22 +35,6 @@ public class WebSecurityConfig {
           "/webjars/**"
   };
 
-//  /**
-//   * The method creates a user information service
-//   * @return displays information about the user in memory
-//   */
-//  @Bean
-//  public InMemoryUserDetailsManager userDetailsService() {
-//    UserDetails user =
-//        User.builder()
-//            .username("user@gmail.com")
-//            .password("password")
-//            .passwordEncoder((plainText) -> passwordEncoder().encode(plainText))
-//            .roles("USER")
-//            .build();
-//    return new InMemoryUserDetailsManager(user);
-//  }
-
   /**
    * the method filters http
    * @param http http

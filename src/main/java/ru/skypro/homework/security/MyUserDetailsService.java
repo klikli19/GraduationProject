@@ -9,6 +9,15 @@ import ru.skypro.homework.dto.SecurityUserDto;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.UserRepository;
 
+/**
+ * My User Information Service
+ * My information service for users uploads a user by username
+ *
+ * @author Marina Gubina
+ * @see UserRepository
+ * @see UserMapper
+ * @see MyUserDetails
+ */
 @Service
 @RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
@@ -16,11 +25,18 @@ public class MyUserDetailsService implements UserDetailsService {
     private final UserMapper userMapper;
     private final MyUserDetails userDetails;
 
+    /**
+     * The method loads the user by user name
+     *
+     * @param username the username identifying the user whose data is required.
+     * @return displays information about the user
+     * @throws UsernameNotFoundException Exception
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SecurityUserDto securityUserDto = userRepository.findByEmailIgnoreCase(username)
-                        .map(userMapper::toSecurityDto)
-                        .orElseThrow(() -> new UsernameNotFoundException("no username"));
+                .map(userMapper::toSecurityDto)
+                .orElseThrow(() -> new UsernameNotFoundException("no username"));
         userDetails.setUserDto(securityUserDto);
         return userDetails;
     }

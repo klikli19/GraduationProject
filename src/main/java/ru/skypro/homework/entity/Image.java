@@ -36,7 +36,6 @@ public class Image {
     /**
      * Field: image volume
      */
-
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;

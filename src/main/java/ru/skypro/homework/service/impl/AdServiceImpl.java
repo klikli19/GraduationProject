@@ -30,11 +30,14 @@ import static org.springframework.util.ObjectUtils.isEmpty;
  * Servic AdServiceImpl
  * Service for get all Ads, create Ad, get full Ad, delete Ad,
  * update Ad, get User all Ads, update Image, get Ad Image
+ *
+ * @author Marina Gubina
  * @see AdsMapper
  * @see AdRepository
  * @see ImageService
  * @see UserService
- * @author Marina Gubina
+ * @see CommentService
+ * @see MyUserDetails
  */
 @Service
 @RequiredArgsConstructor
@@ -62,10 +65,9 @@ public class AdServiceImpl implements AdService {
     public Collection<AdsDTO> getAllAds(String title) {
         log.info("Request to receive all ads");
         Collection<Ad> ads;
-        if (!isEmpty(title)){
+        if (!isEmpty(title)) {
             ads = adRepository.findByTitleLikeIgnoreCase(title);
-        }
-        else{
+        } else {
             ads = adRepository.findAll();
         }
         return adsMapper.adsToAdsListDto(ads);
@@ -74,14 +76,14 @@ public class AdServiceImpl implements AdService {
     /**
      * method for creating an ad
      *
-     * @param createAdsDTO a DTO declaration is created
-     * @param image product image
+     * @param createAdsDTO   a DTO declaration is created
+     * @param image          product image
      * @param authentication verification procedure
      * @return created ad in DTO ad
      */
     @Override
     public AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication) {
-        if (createAdsDTO.getPrice() < 0){
+        if (createAdsDTO.getPrice() < 0) {
             throw new IllegalArgumentException("Price cannot be negative");
         }
         Ad ad = adsMapper.adsDtoToAd(createAdsDTO);
@@ -131,17 +133,17 @@ public class AdServiceImpl implements AdService {
      * method of getting full advertising
      *
      * @param createAdsDTO a DTO declaration is created
-     * @param adId identifier ads
+     * @param adId         identifier ads
      * @return displays the updated ad
      */
     @Override
     public AdsDTO updateAd(CreateAdsDTO createAdsDTO, Long adId) {
         log.info("Request to update ad by id");
-        if (createAdsDTO.getPrice() < 0){
+        if (createAdsDTO.getPrice() < 0) {
             throw new IllegalArgumentException("Price cannot be negative");
         }
         Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
-        adsMapper.updateAds(createAdsDTO,ad);
+        adsMapper.updateAds(createAdsDTO, ad);
         adRepository.save(ad);
 
         return adsMapper.adToAdsDTO(ad);
@@ -150,14 +152,13 @@ public class AdServiceImpl implements AdService {
     /**
      * the method outputs all the user's ads
      *
-//     * @param authentication verification procedure
      * @return displays all the user's ads
      */
     @Override
     public Collection<AdsDTO> getUserAllAds() {
         log.info("Request to get all user ads");
         Collection<Ad> ads;
-        log.info(userDetails.getIdUserDto() + "   "+ userDetails.getAuthorities() + "   " + userDetails.getUsername());
+        log.info(userDetails.getIdUserDto() + "   " + userDetails.getAuthorities() + "   " + userDetails.getUsername());
         ads = adRepository.findAllAdsByAuthorId(userDetails.getIdUserDto());
 
         return adsMapper.adsToAdsListDto(ads);
@@ -166,7 +167,7 @@ public class AdServiceImpl implements AdService {
     /**
      * the method updates the product image
      *
-     * @param adId identifier ads
+     * @param adId  identifier ads
      * @param image product image
      * @return displays an updated product image
      * @throws IOException Exclusion of input output
@@ -189,9 +190,8 @@ public class AdServiceImpl implements AdService {
      * @return displays an image of the product by its id
      */
     @Override
-    public byte[] getAdImage(Long adId){
+    public byte[] getAdImage(Long adId) {
         log.info("Get image of an AD with a ID:" + adId);
         return imageService.getImage(adRepository.findById(adId).orElseThrow(AdNotFoundException::new).getImage().getId());
     }
-
 }

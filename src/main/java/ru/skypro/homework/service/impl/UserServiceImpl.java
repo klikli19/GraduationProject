@@ -21,11 +21,14 @@ import java.nio.file.Files;
 
 /**
  * Servic UserServiceImpl
- * Service for the implementation of the user service
+ * The service for the implementation of user service updates the user,
+ * receives an authorized Dto user, receives an authorized user,
+ * changes the password, updates the avatar, receives an image of the user's product
  *
  * @see UserRepository
  * @see UserMapper
  * @see ImageServiceImpl
+ * @see PasswordEncoder
  * @author Kilikova Anna
  * @author Marina Gubina
  */
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService {
      * The method shows the user update
      * @param userDTO user DTO
      * @param authentication user identification
-     * @return null
+     * @return outputs a user update
      */
     @Override
     public UserDTO updateUser(UserDTO userDTO, Authentication authentication) {
@@ -111,6 +114,7 @@ public class UserServiceImpl implements UserService {
      * The method gets the volume of the product image by the User ID
      * @param userId User identification number
      * @return outputs the volume of the product image by user ID
+     * @throws IOException exclusion of input output
      */
     @Override
     public byte[] getUserImage(Long userId) throws IOException {

@@ -14,11 +14,12 @@ import java.io.IOException;
 
 /**
  * Servic ImageServiceImpl
- * Image Processing Service
+ * The image processing service downloads the image,
+ * deletes the image, receives the image
  *
+ * @see ImageRepository
  * @author Rogozin Alexandr
  * @author Kilikova Anna
- * @see ImageRepository
  */
 @Service
 @RequiredArgsConstructor
