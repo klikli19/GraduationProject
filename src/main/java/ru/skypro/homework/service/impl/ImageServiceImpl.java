@@ -64,6 +64,7 @@ public class ImageServiceImpl implements ImageService {
      * @param id image identification number
      * @return returns the volume of the image
      */
+    @Override
     public byte[] getImage(Long id) {
         return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
     }

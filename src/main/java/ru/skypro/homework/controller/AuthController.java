@@ -26,7 +26,6 @@ import static ru.skypro.homework.constant.Role.USER;
  * The controller is used for performs authorization, outputs the register to the user,
  *
  * @see AuthService
- * @author Kilikova Anna
  */
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")

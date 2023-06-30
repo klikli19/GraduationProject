@@ -5,8 +5,6 @@ import ru.skypro.homework.constant.Role;
 
 /**
  * The RegisterReq class, represents the essence of registration
- *
- * @author Kilikova Anna
  */
 @Data
 public class RegisterReq {
