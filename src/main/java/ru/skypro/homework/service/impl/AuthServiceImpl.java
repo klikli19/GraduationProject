@@ -14,8 +14,8 @@ import ru.skypro.homework.security.MyUserDetailsService;
 import ru.skypro.homework.service.AuthService;
 
 /**
- * Servic AuthServiceImpl
- * Service for entering a name and password
+ * Service AuthServiceImpl
+ * Service used to authentication and registration user
  *
  * @author Kilikova Anna
  * @see MyUserDetailsService
@@ -37,11 +37,11 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
 
     /**
-     * The method returns the username used for authentication
+     * The method used to user authentication
      *
-     * @param userName user name
+     * @param userName user login
      * @param password user password
-     * @return returns the user's password
+     * @return authorized user
      */
     @Override
     public boolean login(String userName, String password) {
@@ -50,12 +50,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     /**
-     * The method determines whether the user's value is present in the register
+     * The method used to user registration
      *
      * @param registerReq registration
      * @param role        role
-     * @return false - if the value is missing
-     * @return true - if the value is present
+     * @return registered user
      */
     @Override
     public boolean register(RegisterReq registerReq, Role role) {
