@@ -29,12 +29,14 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public boolean login(String userName, String password) {
+    log.info("Request to user login ");
     UserDetails userDetails = manager.loadUserByUsername(userName);
     return encoder.matches(password, userDetails.getPassword());
   }
 
   @Override
   public boolean register(RegisterReq registerReq, Role role) {
+    log.info("Request to user registration");
     if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
       return false;
     }

@@ -20,6 +20,7 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
     @Override
     public Image downloadImage(MultipartFile imageFile) throws IOException {
+        log.info("Request to avatar upload");
         Image image = new Image();
         image.setMediaType(imageFile.getContentType());
         image.setData(imageFile.getBytes());
@@ -28,11 +29,13 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void deleteImage(Long id) {
+        log.info("Request to avatar delete by id {}", id);
         repository.deleteById(id);
     }
 
     @Override
     public byte[] getImage(Long id) {
+        log.info("Request to avatar by id {}", id);
         return repository.findById(id).orElseThrow(ImageNotFoundException::new).getData();
     }
 }
