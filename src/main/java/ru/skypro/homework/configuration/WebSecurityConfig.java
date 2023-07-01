@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * Class WebSecurityConfig
- * Used to create a Bean to run the site
+ * Used for Spring Security configuration
  *
  * @author Kilikova Anna
  */

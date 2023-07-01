@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,24 +24,24 @@ import static ru.skypro.homework.constant.Role.USER;
 
 /**
  * Controller AuthController
- * The controller is used for performs authorization, outputs the register to the user,
- *
+ * The controller is used to perform authorization, user registration
  * @see AuthService
  */
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Авторизация/регистрация")
 public class AuthController {
 
     private final AuthService authService;
 
     @Operation(
-            summary = "performs authorization",
+            summary = "Авторизация пользователя",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "authorization completed",
+                            description = "Авторизация прошла успешно",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
@@ -48,14 +49,13 @@ public class AuthController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "authorization failed",
+                            description = "Ошибка авторизации",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
                             )
                     )
-            },
-            tags = "User"
+            }
     )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReq req) {
@@ -67,11 +67,11 @@ public class AuthController {
     }
 
     @Operation(
-            summary = "outputs the register to the user",
+            summary = "Регистрация пользователя",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "the register is displayed to the user",
+                            description = "Пользователь зарегистрирован",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
@@ -79,14 +79,13 @@ public class AuthController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the register is not displayed to the user",
+                            description = "Ошибка регистрации пользователя",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
                             )
                     )
-            },
-            tags = "User"
+            }
     )
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterReq req) {

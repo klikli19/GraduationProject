@@ -13,9 +13,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Mapper CommentMapper
- * The mapper is used to work with the database
- *
+ * Interface CommentMapper
+ * The mapper is used to map the CommentDTO fields to the Comment entity
  * @author Bogomolov Ilya
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

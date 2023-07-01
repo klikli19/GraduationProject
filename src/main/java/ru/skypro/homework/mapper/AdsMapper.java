@@ -12,9 +12,8 @@ import ru.skypro.homework.entity.Ad;
 import java.util.Collection;
 
 /**
- * Mapper AdsMapper
- * The mapper is used to work with the database
- *
+ * Interface AdsMapper
+ * The mapper is used to map the AdsDTO, FullAdsDto fields to the Ad entity
  * @author Gubina Marina
  */
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)

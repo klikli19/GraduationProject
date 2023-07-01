@@ -11,8 +11,8 @@ import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 
 /**
- * Mapper UserMapper
- * The mapper is used to work with the database
+ * Interface UserMapper
+ * The mapper is used to map the UserDTO fields to the User entity
  * @author Kilikova Anna
  * @author Marina Gubina
  */

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.service.AdService;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ads")
+@Tag(name = "Ads")
 public class AdsController {
     private final AdService adService;
 
@@ -42,7 +45,7 @@ public class AdsController {
                             description = "all ads received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = ResponseWrapper.class)
                             )
                     ),
                     @ApiResponse(
@@ -50,11 +53,10 @@ public class AdsController {
                             description = "no ads received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = ResponseWrapper.class)
                             )
                     )
-            },
-            tags = "AdsDTO"
+            }
     )
     @GetMapping
     public ResponseEntity<ResponseWrapper<AdsDTO>> getAllAds(@RequestParam(required = false) String title){
@@ -82,8 +84,7 @@ public class AdsController {
                                     schema = @Schema(implementation = AdsDTO.class)
                             )
                     )
-            },
-            tags = "AdsDTO"
+            }
     )
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDTO> createAds(@RequestPart("properties") @NotNull CreateAdsDTO createAdsDTO,
@@ -101,7 +102,7 @@ public class AdsController {
                             description = "ad received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = FullAdsDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -109,11 +110,10 @@ public class AdsController {
                             description = "don't get Ad",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = FullAdsDto.class)
                             )
                     )
-            },
-            tags = "AdsDTO"
+            }
     )
     @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAd(@PathVariable int id){
@@ -121,6 +121,27 @@ public class AdsController {
         return ResponseEntity.ok(fullAdsDto);
     }
 
+    @Operation(
+            summary = "delete Ad",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "ad removed",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "the ad has not been deleted",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = AdsDTO.class)
+                            )
+                    )
+            }
+    )
     @PreAuthorize("@adServiceImpl.getFullAd(#id).email == authentication.name or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable int id){
@@ -147,8 +168,7 @@ public class AdsController {
                                     schema = @Schema(implementation = AdsDTO.class)
                             )
                     )
-            },
-            tags = "AdsDTO"
+            }
     )
     @PreAuthorize("@adServiceImpl.getFullAd(#id).email == authentication.name or hasRole('ADMIN')")
     @PatchMapping("/{id}")
@@ -165,7 +185,7 @@ public class AdsController {
                             description = "my ads have been received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = ResponseWrapper.class)
                             )
                     ),
                     @ApiResponse(
@@ -173,11 +193,10 @@ public class AdsController {
                             description = "my ads have not been received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = ResponseWrapper.class)
                             )
                     )
-            },
-            tags = "AdsDTO"
+            }
     )
     @GetMapping("/me")
     public ResponseEntity<ResponseWrapper<AdsDTO>> getMeAd(){
@@ -205,8 +224,7 @@ public class AdsController {
                                     schema = @Schema(implementation = AdsDTO.class)
                             )
                     )
-            },
-            tags = "AdsDTO"
+            }
     )
     @PreAuthorize("@adServiceImpl.getFullAd(#id).email == authentication.name or hasRole('ADMIN')")
     @PatchMapping(value = "/{id}/image",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -222,7 +240,7 @@ public class AdsController {
                             description = "image received by id",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = Image.class)
                             )
                     ),
                     @ApiResponse(
@@ -230,11 +248,10 @@ public class AdsController {
                             description = "image by id not received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = AdsDTO.class)
+                                    schema = @Schema(implementation = Image.class)
                             )
                     )
-            },
-            tags = "AdsDTO"
+            }
     )
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable long id){

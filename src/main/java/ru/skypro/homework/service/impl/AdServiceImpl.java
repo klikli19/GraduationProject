@@ -1,6 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -41,6 +42,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Transactional
 public class AdServiceImpl implements AdService {
 
@@ -50,14 +52,10 @@ public class AdServiceImpl implements AdService {
     private final UserService userService;
     private final CommentService commentService;
     private final MyUserDetails userDetails;
-    /**
-     * Field: The object that fires log events.
-     */
-    private final Logger log = LoggerFactory.getLogger(AdServiceImpl.class);
+
 
     /**
      * Method for getting all ads
-     *
      * @param title available ads
      * @return list of ads
      */
