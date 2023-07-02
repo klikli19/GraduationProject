@@ -49,6 +49,7 @@ public class AuthServiceImpl implements AuthService {
         return encoder.matches(password, userDetails.getPassword());
     }
 
+
     /**
      * The method used to user registration
      *
