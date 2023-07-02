@@ -13,6 +13,7 @@ import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 
 import java.io.File;
@@ -26,7 +27,7 @@ import java.nio.file.Files;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final ImageServiceImpl imageService;
+    private final ImageService imageService;
     private final PasswordEncoder encoder;
 
     @Override
