@@ -86,6 +86,21 @@ public class UserServiceImplTest {
         verify(userRepository).findByEmailIgnoreCase(USERNAME);
     }
 
+
+    @Test
+    public void getAuthorizedUserDtoTest() {
+        User user = new User();
+        user.setEmail(USERNAME);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(USERNAME);
+        when(authentication.getName()).thenReturn(USERNAME);
+//        when(userMapper.toDTO(any(User.class))).thenReturn(userDTO);
+        UserDTO test = userService.getAuthorizedUserDto(authentication);
+        assertEquals(userDTO, test);
+        verify(userRepository).getUserByEmail(USERNAME);
+        verify(userMapper).toDTO(user);
+
+    }
     @Test
     public void changePasswordTest() {
         User user = new User();
