@@ -28,13 +28,13 @@ import ru.skypro.homework.service.AuthService;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final MyUserDetailsService manager;
+  private final MyUserDetailsService manager;
 
-    private final PasswordEncoder encoder;
+  private final PasswordEncoder encoder;
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    private final UserMapper userMapper;
+  private final UserMapper userMapper;
 
     /**
      * The method used to user authentication
