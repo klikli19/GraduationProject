@@ -4,14 +4,14 @@ import lombok.Data;
 import ru.skypro.homework.constant.Role;
 
 /**
- * The Dto Security User class, represents the Dto Security User
+ * The SecurityUserDto class, represents the DTO of a user for MyUserDetails
  *
  * @author Gubina Marina
  */
 @Data
 public class SecurityUserDto {
     /**
-     * Field: Ab identification number
+     * Field: User's identification number
      */
     private Integer id;
     /**

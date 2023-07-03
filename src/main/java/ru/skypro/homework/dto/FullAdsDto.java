@@ -14,7 +14,7 @@ public class FullAdsDto {
      */
     private int pk;
     /**
-     * Field: username
+     * Field: user's first name
      */
     private String authorFirstName;
     /**

@@ -34,7 +34,7 @@ public class Image {
     private String mediaType;
 
     /**
-     * Field: image volume
+     * Field: image contents
      */
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")

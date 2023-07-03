@@ -22,7 +22,7 @@ public class Comment {
     @Column(name = "id", nullable = false)
     private Long id;
     /**
-     * Field:  comment creation time
+     * Field: comment creation time
      */
     private LocalDateTime createdAt;
     /**

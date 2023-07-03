@@ -44,9 +44,6 @@ public class ImageServiceImpl implements ImageService {
         return repository.save(image);
     }
 
-
-
-
     /**
      * MMethod of deleting an image
      *
@@ -59,10 +56,10 @@ public class ImageServiceImpl implements ImageService {
     }
 
     /**
-     * Method outputs the image volume
+     * Method outputs the image contents
      *
      * @param id image identification number
-     * @return returns the volume of the image
+     * @return returns the contents of the image
      */
     @Override
     public byte[] getImage(Long id) {

@@ -111,9 +111,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Method gets the volume of the product image by the User ID
+     * Method gets the contents of the product image by the User ID
      * @param userId User identification number
-     * @return outputs the volume of the product image by user ID
+     * @return outputs the contents of the product image by user ID
      * @throws IOException exclusion of input output
      */
     @Override

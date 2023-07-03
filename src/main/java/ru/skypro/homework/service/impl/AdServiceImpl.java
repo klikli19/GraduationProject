@@ -28,7 +28,7 @@ import java.util.Collection;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
- * Servic AdServiceImpl
+ * Service AdServiceImpl
  * Service for get all Ads, create Ad, get full Ad, delete Ad,
  * update Ad, get User all Ads, update Image, get Ad Image
  *

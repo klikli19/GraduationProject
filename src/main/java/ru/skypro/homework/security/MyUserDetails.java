@@ -35,9 +35,9 @@ public class MyUserDetails implements UserDetails {
     }
 
     /**
-     * The method gets the user ID Dto
+     * The method gets the user ID
      *
-     * @return gets the user ID Dto
+     * @return gets the user ID
      */
     public Integer getIdUserDto() {
         return Optional.ofNullable(securityUserDto)
@@ -75,7 +75,7 @@ public class MyUserDetails implements UserDetails {
     /**
      * The method gets the username
      *
-     * @return gets the user name
+     * @return gets the username - email of user
      */
     @Override
     public String getUsername() {

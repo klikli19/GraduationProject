@@ -16,13 +16,13 @@ public class ResponseWrapper<T> {
      */
     private final int count;
     /**
-     * Field: collection of results
+     * Field: collection
      */
     private final Collection<T> results;
 
     /**
      * Constructor with parameters for creating a response shell
-     * @param results results
+     * @param results Collection<T> results
      */
     public ResponseWrapper(Collection<T> results) {
         this.count = results.size();
