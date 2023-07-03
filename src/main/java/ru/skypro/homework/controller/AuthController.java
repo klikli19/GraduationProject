@@ -31,17 +31,17 @@ import static ru.skypro.homework.constant.Role.USER;
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Авторизация/регистрация")
+@Tag(name = "Authorization/registration")
 public class AuthController {
 
     private final AuthService authService;
 
     @Operation(
-            summary = "Авторизация пользователя",
+            summary = "User authorization",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Авторизация прошла успешно",
+                            description = "Authorization was successful",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
@@ -49,7 +49,7 @@ public class AuthController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Ошибка авторизации",
+                            description = "Authorization Error",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
@@ -67,11 +67,11 @@ public class AuthController {
     }
 
     @Operation(
-            summary = "Регистрация пользователя",
+            summary = "User registration",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Пользователь зарегистрирован",
+                            description = "User successfully registered",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
@@ -79,7 +79,7 @@ public class AuthController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Ошибка регистрации пользователя",
+                            description = "User registration failed",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = User.class)
