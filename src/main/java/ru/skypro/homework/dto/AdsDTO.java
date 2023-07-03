@@ -15,19 +15,19 @@ public class AdsDTO {
      */
     private int author;
     /**
-     * Field: image name
+     * Field: link to image
      */
     private String image;
     /**
-     * Field: pk
+     * Field: primary key
      */
     private int pk;
     /**
-     * Field: price
+     * Field: product price
      */
     private int price;
     /**
-     * Field: product description
+     * Field: product title
      */
     private String title;
 

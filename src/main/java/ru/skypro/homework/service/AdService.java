@@ -12,7 +12,7 @@ import java.util.Collection;
 
 /**
  * Interface AdService
- * The interface is used to work with the database
+ * The interface is used to work with ads
  *
  * @author Gubina Marina
  */

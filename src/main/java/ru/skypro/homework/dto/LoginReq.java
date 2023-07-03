@@ -12,7 +12,7 @@ public class LoginReq {
      */
     private String password;
     /**
-     * Field: user name
+     * Field: username
      */
     private String username;
 

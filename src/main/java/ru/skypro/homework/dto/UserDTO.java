@@ -19,7 +19,7 @@ public class UserDTO {
      */
     private String email;
     /**
-     * Field: User name
+     * Field: first name
      */
     private String firstName;
     /**
@@ -31,11 +31,11 @@ public class UserDTO {
      */
     private String phone;
     /**
-     * Field: User image
+     * Field: link to avatar
      */
     private String image;
     /**
-     * Field: role
+     * Field: role user's
      */
     private Role role;
 }

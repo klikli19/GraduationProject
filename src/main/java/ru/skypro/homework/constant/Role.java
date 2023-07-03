@@ -1,7 +1,8 @@
 package ru.skypro.homework.constant;
 
 /**
- * Enum Role, lists two options user and admin
+ * Enum Role
+ * used to set the authorized user role
  */
 public enum Role {
     USER, ADMIN

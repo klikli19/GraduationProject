@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  * Interface UserService
- * The interface is used to work with the database
+ * The interface is used to work with users
  * @author Kilikova Anna
  * @author Marina Gubina
  */

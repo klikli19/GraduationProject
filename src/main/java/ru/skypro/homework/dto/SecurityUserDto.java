@@ -23,7 +23,7 @@ public class SecurityUserDto {
      */
     private String password;
     /**
-     * Field: role
+     * Field: role user's
      */
     private Role role;
 }

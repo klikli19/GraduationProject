@@ -72,7 +72,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * method for creating an ad
+     * Method for creating an ad
      *
      * @param createAdsDTO   a DTO declaration is created
      * @param image          product image
@@ -101,7 +101,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * method of getting full advertising
+     * Method of getting full ad
      *
      * @param adId identifier ads
      * @return we get full information about the ad
@@ -114,7 +114,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * method that removes the ad
+     * Method that removes the ad
      *
      * @param adId identifier ads
      */
@@ -128,7 +128,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * method of getting full advertising
+     * Method of update ad
      *
      * @param createAdsDTO a DTO declaration is created
      * @param adId         identifier ads
@@ -148,7 +148,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * the method outputs all the user's ads
+     * Method outputs all the user's ads
      *
      * @return displays all the user's ads
      */
@@ -163,7 +163,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * the method updates the product image
+     * Method updates the product image
      *
      * @param adId  identifier ads
      * @param image product image
@@ -182,7 +182,7 @@ public class AdServiceImpl implements AdService {
     }
 
     /**
-     * the method outputs an image of the product by id
+     * Method outputs an image of the product by id
      *
      * @param adId identifier ads
      * @return displays an image of the product by its id

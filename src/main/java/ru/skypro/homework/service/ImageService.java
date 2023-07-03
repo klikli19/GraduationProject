@@ -7,7 +7,7 @@ import java.io.IOException;
 
 /**
  * Interface ImageService
- * The interface is used to work with the database
+ * The interface is used to work with images
  *
  * @author Kilikova Anna
  */

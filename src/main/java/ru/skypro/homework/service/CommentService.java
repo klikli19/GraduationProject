@@ -8,7 +8,7 @@ import ru.skypro.homework.entity.Comment;
 
 /**
  * Interface CommentService
- * The interface is used to work with the database
+ * The interface is used to work with comments
  * @author Bogomolov Ilya
  * @author Kilikova Anna
  */

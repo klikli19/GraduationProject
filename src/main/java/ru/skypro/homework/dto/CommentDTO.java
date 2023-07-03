@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class CommentDTO {
     /**
-     * Field: pk
+     * Field: primary key
      */
     private int pk;
     /**
@@ -18,7 +18,7 @@ public class CommentDTO {
      */
     private int author;
     /**
-     * Field: author Image
+     * Field: link to the author's avatar
      */
     private String authorImage;
     /**
@@ -26,7 +26,7 @@ public class CommentDTO {
      */
     private String authorFirstName;
     /**
-     * Field: when was the comment created
+     * Field: comment creation time
      */
     private Long createdAt;
     /**

@@ -5,7 +5,7 @@ import ru.skypro.homework.constant.Role;
 
 /**
  * Interface AuthService
- * The interface is used to work with the database
+ * The interface is used to work with login and registration user's
  */
 public interface AuthService {
     boolean login(String userName, String password);

@@ -13,7 +13,7 @@ import ru.skypro.homework.service.ImageService;
 import java.io.IOException;
 
 /**
- * Servic ImageServiceImpl
+ * Service ImageServiceImpl
  * The image processing service downloads the image,
  * deletes the image, receives the image
  *
@@ -28,10 +28,8 @@ import java.io.IOException;
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
 
-
-
     /**
-     * The method loads the image
+     * Method loads the image
      *
      * @param imageFile product image
      * @return displays the saved product image
@@ -50,7 +48,7 @@ public class ImageServiceImpl implements ImageService {
 
 
     /**
-     * image removal method
+     * MMethod of deleting an image
      *
      * @param id image identification number
      */
@@ -61,7 +59,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     /**
-     * the method outputs the image volume
+     * Method outputs the image volume
      *
      * @param id image identification number
      * @return returns the volume of the image

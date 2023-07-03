@@ -31,7 +31,7 @@ public class User {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     /**
-     * Field: User Name
+     * Field: User's first name
      */
     private String firstName;
     /**
@@ -57,7 +57,7 @@ public class User {
     private String email;
 
     /**
-     * Field: image from the User
+     * Field: avatar from the User
      */
     @OneToOne
     @JoinColumn(name = "image_id")

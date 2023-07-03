@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Servic CommentServiceImpl
+ * Service CommentServiceImpl
  * The service for implementing the comments service receives all comments,
  * receives a comment, adds a comment,deletes a comment,
  * deletes everything by the ad ID, updates the comment
@@ -60,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * The method outputs the addition of a comment
+     * Method outputs the addition of a comment
      *
      * @param commentId comment identification number
      * @return displays the added comment
@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * The method adds a comment
+     * Method adds a comment
      *
      * @param id             identification number
      * @param comment        the DTO comment being created

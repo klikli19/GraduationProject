@@ -10,11 +10,11 @@ import lombok.Data;
 @Data
 public class FullAdsDto {
     /**
-     * Field: pk
+     * Field: primary key
      */
     private int pk;
     /**
-     * Field: user name
+     * Field: username
      */
     private String authorFirstName;
     /**
@@ -30,11 +30,11 @@ public class FullAdsDto {
      */
     private String email;
     /**
-     * Field: product image
+     * Field: link to image
      */
     private String image;
     /**
-     * Field: phone number
+     * Field: phone number user's
      */
     private String phone;
     /**
@@ -42,7 +42,7 @@ public class FullAdsDto {
      */
     private int price;
     /**
-     * Field: title
+     * Field: product title
      */
     private String title;
 }

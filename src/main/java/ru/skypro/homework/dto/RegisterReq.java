@@ -9,7 +9,7 @@ import ru.skypro.homework.constant.Role;
 @Data
 public class RegisterReq {
     /**
-     * Field: user name
+     * Field: username
      */
     private String username;
     /**
@@ -25,11 +25,11 @@ public class RegisterReq {
      */
     private String lastName;
     /**
-     * Field: phone
+     * Field: phone user's
      */
     private String phone;
     /**
-     * Field: role
+     * Field: role user's
      */
     private Role role;
 }

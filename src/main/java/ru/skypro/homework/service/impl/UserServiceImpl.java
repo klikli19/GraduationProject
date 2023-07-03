@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 /**
- * Servic UserServiceImpl
+ * Service UserServiceImpl
  * The service for the implementation of user service updates the user,
  * receives an authorized Dto user, receives an authorized user,
  * changes the password, updates the avatar, receives an image of the user's product
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * The method authorizes the user DTO
+     * Method getting authorized the user DTO
      * @param authentication user identification
      * @return outputs an authorized DTO user
      */
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * The method authorizes the user
+     * Method authorized the user
      * @param authentication user identification
      * @return outputs an authorized user
      */
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * The method will change the password
+     * Method will change the password
      * @param newPasswordDTO new DTO password
      * @param authentication user identification
      */
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * The method updates the avatar
+     * Method updates the avatar
      * @param image product image
      * @param authentication user identification
      * @throws IOException exclusion of input output
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * The method gets the volume of the product image by the User ID
+     * Method gets the volume of the product image by the User ID
      * @param userId User identification number
      * @return outputs the volume of the product image by user ID
      * @throws IOException exclusion of input output

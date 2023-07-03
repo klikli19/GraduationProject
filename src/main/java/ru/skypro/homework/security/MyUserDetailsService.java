@@ -10,10 +10,11 @@ import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.UserRepository;
 
 /**
- * My User Information Service
- * My information service for users uploads a user by username
+ * Service MyUserDetailsService
+ * Service for users uploads a user by username
  *
  * @author Marina Gubina
+ * @author Kilikova Anna
  * @see UserRepository
  * @see UserMapper
  * @see MyUserDetails
@@ -26,7 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private final MyUserDetails userDetails;
 
     /**
-     * The method loads the user by user name
+     * The method loads the user by username
      *
      * @param username the username identifying the user whose data is required.
      * @return displays information about the user
