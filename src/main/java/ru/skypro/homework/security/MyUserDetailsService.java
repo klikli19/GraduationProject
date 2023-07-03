@@ -11,7 +11,7 @@ import ru.skypro.homework.repository.UserRepository;
 
 /**
  * Service MyUserDetailsService
- * Service for users uploads a user by username
+ * Service for locate the user based on the username
  *
  * @author Marina Gubina
  * @author Kilikova Anna

@@ -11,11 +11,9 @@ import java.util.Collections;
 import java.util.Optional;
 
 /**
- * My User Data class
- * My user data sets the Dto user, gets the Dto user ID, gets the credentials,
- * gets the password, gets the username, determines the account has not expired,
- * determines the account is not blocked,
- * determines the validity of the credentials has not expired, determines enabled
+ * MyUserDetails class
+ * MyUserDetails is the implementation of UserDetails
+ * provides the necessary information to construct the Authentication object
  *
  * @author Kilikova Anna
  * @author Marina Gubina
@@ -28,7 +26,7 @@ public class MyUserDetails implements UserDetails {
     private SecurityUserDto securityUserDto;
 
     /**
-     * Constructor with parameters for creating a response shell
+     * Constructor
      *
      * @param userDto Dto Security User
      */
@@ -75,7 +73,7 @@ public class MyUserDetails implements UserDetails {
     }
 
     /**
-     * The method gets the user name
+     * The method gets the username
      *
      * @return gets the user name
      */
