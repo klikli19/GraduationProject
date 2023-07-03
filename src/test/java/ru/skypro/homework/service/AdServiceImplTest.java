@@ -161,7 +161,6 @@ public class AdServiceImplTest {
 
     @Test
     public void getAllUserAds(){
-
     }
 
     @Test
