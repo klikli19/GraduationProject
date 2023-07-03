@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public boolean login(String userName, String password) {
-    log.info("Request to user login ");
+    log.info("login: " + userName + " password: " + password);
     UserDetails userDetails = manager.loadUserByUsername(userName);
     return encoder.matches(password, userDetails.getPassword());
   }
