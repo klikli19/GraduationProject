@@ -36,18 +36,19 @@ public class AuthServiceImpl implements AuthService {
 
   private final UserMapper userMapper;
 
-    /**
-     * The method used to user authentication
-     *
-     * @param userName user login
-     * @param password user password
-     * @return authorized user
-     */
-    @Override
-    public boolean login(String userName, String password) {
-        UserDetails userDetails = manager.loadUserByUsername(userName);
-        return encoder.matches(password, userDetails.getPassword());
-    }
+  /**
+   * The method used to user authentication
+   *
+   * @param userName user login
+   * @param password user password
+   * @return authorized user
+   */
+  @Override
+  public boolean login(String userName, String password) {
+    log.info("login: " + userName + " password: " + password);
+    UserDetails userDetails = manager.loadUserByUsername(userName);
+    return encoder.matches(password, userDetails.getPassword());
+  }
 
 
     /**

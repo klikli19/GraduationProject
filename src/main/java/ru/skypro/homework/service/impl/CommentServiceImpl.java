@@ -53,6 +53,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public ResponseWrapperComment getAllComments(int idAd) {
+        log.info("getAllComments method");
         List<Comment> comments = commentRepository.findAllByAdId(idAd);
         ResponseWrapperComment responseWrapper = new ResponseWrapperComment();
         responseWrapper.setResults(commentMapper.toCommentsListDto(comments));
@@ -67,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public Comment getComment(long commentId) {
-
+        log.info("getComment method");
         return commentRepository.findById(commentId).orElseThrow();
     }
 
@@ -81,6 +82,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public CommentDTO addComment(int id, CreateCommentDTO comment, Authentication authentication) {
+        log.info("addComment method");
         Comment newComment = commentMapper.toComment(comment);
         newComment.setAd(adRepository.findById((long) id)
                 .orElseThrow(AdNotFoundException::new));
@@ -98,6 +100,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentId comment identification number
      */
     public void deleteComment(int adId, int commentId) {
+        log.info("deleteComment method");
         commentRepository.deleteByIdAndAdId(commentId, adId);
     }
 
@@ -108,6 +111,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public void deleteAllByAdId(long adId) {
+        log.info("deleteAllByAdId method");
         commentRepository.deleteAllByAdId(adId);
     }
 
@@ -121,6 +125,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public CommentDTO updateComment(int adId, int commentId, CommentDTO commentDTO) {
+        log.info("updateComment method");
         Comment updatedComment = commentRepository.findByIdAndAd_Id(commentId, adId);
         updatedComment.setText(commentDTO.getText());
         commentRepository.save(updatedComment);
