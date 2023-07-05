@@ -34,7 +34,6 @@ import java.util.List;
  * @see CommentMapper
  */
 @Service
-@Transactional
 @Slf4j
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {

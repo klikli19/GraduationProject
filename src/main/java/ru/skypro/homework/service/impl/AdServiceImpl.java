@@ -2,8 +2,6 @@ package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +41,6 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
 public class AdServiceImpl implements AdService {
 
     private final AdsMapper adsMapper;
@@ -170,6 +167,7 @@ public class AdServiceImpl implements AdService {
      * @return displays an updated product image
      * @throws IOException Exclusion of input output
      */
+    @Transactional
     @Override
     public String updateImage(Long adId, MultipartFile image) throws IOException {
         log.info("Request to update image");
@@ -187,6 +185,7 @@ public class AdServiceImpl implements AdService {
      * @param adId identifier ads
      * @return displays an image of the product by its id
      */
+    @Transactional
     @Override
     public byte[] getAdImage(Long adId) {
         log.info("Get image of an AD with a ID:" + adId);
