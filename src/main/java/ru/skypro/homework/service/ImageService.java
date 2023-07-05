@@ -5,8 +5,16 @@ import ru.skypro.homework.entity.Image;
 
 import java.io.IOException;
 
+/**
+ * Interface ImageService
+ * The interface is used to work with images
+ *
+ * @author Kilikova Anna
+ */
 public interface ImageService {
     Image downloadImage(MultipartFile image) throws IOException;
+
     void deleteImage(Long id);
+
     byte[] getImage(Long id);
 }

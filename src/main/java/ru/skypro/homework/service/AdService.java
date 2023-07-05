@@ -10,6 +10,12 @@ import ru.skypro.homework.dto.FullAdsDto;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Interface AdService
+ * The interface is used to work with ads
+ *
+ * @author Gubina Marina
+ */
 public interface AdService {
    Collection<AdsDTO> getAllAds(String title);
    AdsDTO createAd(CreateAdsDTO createAdsDTO, MultipartFile image, Authentication authentication);

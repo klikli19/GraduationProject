@@ -13,6 +13,16 @@ import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.security.MyUserDetailsService;
 import ru.skypro.homework.service.AuthService;
 
+/**
+ * Service AuthServiceImpl
+ * Service used to authentication and registration user
+ *
+ * @author Kilikova Anna
+ * @see MyUserDetailsService
+ * @see PasswordEncoder
+ * @see UserRepository
+ * @see UserMapper
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -26,7 +36,13 @@ public class AuthServiceImpl implements AuthService {
 
   private final UserMapper userMapper;
 
-
+  /**
+   * The method used to user authentication
+   *
+   * @param userName user login
+   * @param password user password
+   * @return authorized user
+   */
   @Override
   public boolean login(String userName, String password) {
     log.info("login: " + userName + " password: " + password);
@@ -34,17 +50,24 @@ public class AuthServiceImpl implements AuthService {
     return encoder.matches(password, userDetails.getPassword());
   }
 
-  @Override
-  public boolean register(RegisterReq registerReq, Role role) {
-    log.info("Request to user registration");
-    if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
-      return false;
+
+    /**
+     * The method used to user registration
+     *
+     * @param registerReq registration
+     * @param role        role
+     * @return registered user
+     */
+    @Override
+    public boolean register(RegisterReq registerReq, Role role) {
+        if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
+            return false;
+        }
+        User regUser = userMapper.toEntity(registerReq);
+        regUser.setRole(role);
+        regUser.setPassword(encoder.encode(regUser.getPassword()));
+        userRepository.save(regUser);
+        return true;
     }
-    User regUser = userMapper.toEntity(registerReq);
-    regUser.setRole(role);
-    regUser.setPassword(encoder.encode(regUser.getPassword()));
-    userRepository.save(regUser);
-    return true;
-  }
 
 }

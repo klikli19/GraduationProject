@@ -21,14 +21,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Servis CommentServiceImpl
- * Service for the implementation of the comments service
+ * Service CommentServiceImpl
+ * The service for implementing the comments service receives all comments,
+ * receives a comment, adds a comment,deletes a comment,
+ * deletes everything by the ad ID, updates the comment
+ *
+ * @author Bogomolov Ilya
+ * @author Kilikova Anna
  * @see CommentRepository
  * @see AdRepository
  * @see UserRepository
  * @see CommentMapper
- * @author Bogomolov Ilya
- * @author Kilikova Anna
  */
 @Service
 @Transactional
@@ -44,6 +47,7 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * Method of getting all comments
+     *
      * @param idAd identifier ads
      * @return Outputs the response wrapper
      */
@@ -57,7 +61,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * The method outputs the addition of a comment
+     * Method outputs the addition of a comment
+     *
+     * @param commentId comment identification number
      * @return displays the added comment
      */
     @Override
@@ -66,6 +72,14 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.findById(commentId).orElseThrow();
     }
 
+    /**
+     * Method adds a comment
+     *
+     * @param id             identification number
+     * @param comment        the DTO comment being created
+     * @param authentication authentication
+     * @return outputs a new DTO comment
+     */
     @Override
     public CommentDTO addComment(int id, CreateCommentDTO comment, Authentication authentication) {
         log.info("addComment method");
@@ -81,7 +95,8 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * Method of deleting a comment
-     * @param adId identifier ads
+     *
+     * @param adId      identifier ads
      * @param commentId comment identification number
      */
     public void deleteComment(int adId, int commentId) {
@@ -90,9 +105,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * Update method comment
-     * @param adId identifier ads
-     * @return outputs the user's DTO comment
+     * The method deletes everything by the ad ID
+     *
+     * @param adId ad identification number
      */
     @Override
     public void deleteAllByAdId(long adId) {
@@ -100,6 +115,14 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteAllByAdId(adId);
     }
 
+    /**
+     * Update method comment
+     *
+     * @param adId       ad identification number
+     * @param commentId  comment identification number
+     * @param commentDTO DTO comment
+     * @return outputs the user's DTO comment
+     */
     @Override
     public CommentDTO updateComment(int adId, int commentId, CommentDTO commentDTO) {
         log.info("updateComment method");

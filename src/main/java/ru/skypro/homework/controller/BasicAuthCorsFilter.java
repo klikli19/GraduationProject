@@ -10,9 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Class BasicAuthCorsFilter
+ * The controller is used for Basic Authentication filter
+ * @see OncePerRequestFilter
+ */
 @Component
 public class BasicAuthCorsFilter extends OncePerRequestFilter {
 
+    /**
+     * The method makes a basic authentication filter
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,

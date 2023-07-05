@@ -12,12 +12,29 @@ import ru.skypro.homework.service.ImageService;
 
 import java.io.IOException;
 
+/**
+ * Service ImageServiceImpl
+ * The image processing service downloads the image,
+ * deletes the image, receives the image
+ *
+ * @see ImageRepository
+ * @author Rogozin Alexandr
+ * @author Kilikova Anna
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
+
+    /**
+     * Method loads the image
+     *
+     * @param imageFile product image
+     * @return displays the saved product image
+     * @throws IOException Exclusion of input output
+     */
     @Override
     public Image downloadImage(MultipartFile imageFile) throws IOException {
         log.info("Request to avatar upload");
@@ -27,12 +44,23 @@ public class ImageServiceImpl implements ImageService {
         return repository.save(image);
     }
 
+    /**
+     * MMethod of deleting an image
+     *
+     * @param id image identification number
+     */
     @Override
     public void deleteImage(Long id) {
         log.info("Request to avatar delete by id {}", id);
         repository.deleteById(id);
     }
 
+    /**
+     * Method outputs the image contents
+     *
+     * @param id image identification number
+     * @return returns the contents of the image
+     */
     @Override
     public byte[] getImage(Long id) {
         log.info("Request to avatar by id {}", id);

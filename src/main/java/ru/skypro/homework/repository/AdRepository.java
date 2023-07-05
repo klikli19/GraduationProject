@@ -9,6 +9,12 @@ import ru.skypro.homework.entity.Ad;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Repository AdRepository
+ * The repository is used to work with the database
+ * The repository is inherited from {@link JpaRepository}
+ * @author Gubina Marina
+ */
 @Repository
 public interface AdRepository extends JpaRepository<Ad,Long> {
 

@@ -3,19 +3,20 @@ package ru.skypro.homework.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CreateCommentDTO;
-import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.entity.Comment;
-import ru.skypro.homework.entity.Image;
-import ru.skypro.homework.entity.User;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Interface CommentMapper
+ * The mapper is used to map the CommentDTO fields to the Comment entity
+ * @author Bogomolov Ilya
+ */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
 
@@ -26,6 +27,12 @@ public interface CommentMapper {
     @Mapping(source = "id", target = "pk")
     CommentDTO toCommentDTO(Comment comment);
 
+    /**
+     * The method creates in
+     *
+     * @param value Local Time Date
+     * @return creates in
+     */
     default Long createdAt(LocalDateTime value) {
         if (value == null) {
             return 0L;
@@ -33,6 +40,12 @@ public interface CommentMapper {
         return value.toInstant(ZoneOffset.ofHours(3)).toEpochMilli();
     }
 
+    /**
+     * Image method
+     *
+     * @param comment comment
+     * @return image
+     */
     default String image(Comment comment) {
         int id = comment.getAuthor().getId().intValue();
         return "/users/" + id + "/image";
