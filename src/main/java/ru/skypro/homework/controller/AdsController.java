@@ -38,11 +38,11 @@ public class AdsController {
     private final AdService adService;
 
     @Operation(
-            summary = "get all ads",
+            summary = "Get all ads",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "all ads received",
+                            description = "All ads received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ResponseWrapper.class)
@@ -50,7 +50,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "no ads received",
+                            description = "No ads received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ResponseWrapper.class)
@@ -66,11 +66,11 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "creates ads",
+            summary = "Create ads",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "the ad has been created",
+                            description = "Ad successfully created",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -78,7 +78,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "does not create ads",
+                            description = "Failed to create ad",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -95,11 +95,11 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "get Ad",
+            summary = "Get Ad",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "ad received",
+                            description = "Ad received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = FullAdsDto.class)
@@ -107,7 +107,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "don't get Ad",
+                            description = "Don't get Ad",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = FullAdsDto.class)
@@ -122,11 +122,11 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "delete Ad",
+            summary = "Delete Ad",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "ad removed",
+                            description = "Ad successfully removed",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -134,7 +134,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the ad has not been deleted",
+                            description = "Failed to delete ad",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -150,11 +150,11 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "update Ad",
+            summary = "Update Ad",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "the ad has been updated",
+                            description = "Ad successfully updated",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -162,7 +162,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the ad has not been updated",
+                            description = "Failed to updated ad",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -178,11 +178,11 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "get my ads",
+            summary = "Get my ads",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "my ads have been received",
+                            description = "My ads have been received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ResponseWrapper.class)
@@ -190,7 +190,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "my ads have not been received",
+                            description = "My ads have not been received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ResponseWrapper.class)
@@ -206,11 +206,11 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "update the ad image",
+            summary = "Update the ad image",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "the ad image has been updated",
+                            description = "Ad image updated successfully",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -218,7 +218,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the ad image has not been updated",
+                            description = "Error updating ad image",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdsDTO.class)
@@ -233,11 +233,11 @@ public class AdsController {
     }
 
     @Operation(
-            summary = "get an image by id",
+            summary = "Get an image by id",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "image received by id",
+                            description = "Image received by id",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = Image.class)
@@ -245,7 +245,7 @@ public class AdsController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "image by id not received",
+                            description = "Image by id not received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = Image.class)

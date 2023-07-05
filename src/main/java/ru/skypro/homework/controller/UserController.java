@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDTO;
 import ru.skypro.homework.dto.UserDTO;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.service.UserService;
 
 
@@ -31,31 +33,31 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("users")
+@Tag(name = "Users")
 public class UserController {
 
     private final UserService service;
 
     @Operation(
-            summary = "changes the password",
+            summary = "Change password",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "password changed",
+                            description = "Password changed successfully",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDTO.class)
+                                    schema = @Schema(implementation = NewPasswordDTO.class)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the password has not been changed",
+                            description = "Error when changing password",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDTO.class)
+                                    schema = @Schema(implementation = NewPasswordDTO.class)
                             )
                     )
-            },
-            tags = "UserDTO"
+            }
     )
     @PostMapping("/set_password")
     public ResponseEntity<?> changePassword(@RequestBody NewPasswordDTO newPassword, Authentication authentication) {
@@ -64,11 +66,11 @@ public class UserController {
     }
 
     @Operation(
-            summary = "gets an authorized user",
+            summary = "Get an authorized user",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "the authorized user has been received",
+                            description = "Authorized user has been received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = UserDTO.class)
@@ -76,14 +78,13 @@ public class UserController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the authorized user has not been received",
+                            description = "Authorized user has not been received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = UserDTO.class)
                             )
                     )
-            },
-            tags = "UserDTO"
+            }
     )
     @GetMapping("/me")
     public ResponseEntity<UserDTO> getAuthorizedUser(Authentication authentication) {
@@ -91,11 +92,11 @@ public class UserController {
     }
 
     @Operation(
-            summary = "updates the user",
+            summary = "Update user information",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "user updated",
+                            description = "User data updated successfully",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = UserDTO.class)
@@ -103,14 +104,13 @@ public class UserController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the user is not updated",
+                            description = "An error occurred while updating data",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = UserDTO.class)
                             )
                     )
-            },
-            tags = "UserDTO"
+            }
     )
     @PatchMapping("/me")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, Authentication authentication) {
@@ -118,26 +118,25 @@ public class UserController {
     }
 
     @Operation(
-            summary = "updates the avatar",
+            summary = "User avatar update",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "avatar updated",
+                            description = "User avatar updated successfully",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDTO.class)
+                                    schema = @Schema(implementation = Image.class)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the avatar has not been updated",
+                            description = "User avatar update error",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDTO.class)
+                                    schema = @Schema(implementation = Image.class)
                             )
                     )
-            },
-            tags = "UserDTO"
+            }
     )
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateAvatar(@RequestPart MultipartFile image, Authentication authentication) throws IOException {
@@ -146,26 +145,25 @@ public class UserController {
     }
 
     @Operation(
-            summary = "gets an image",
+            summary = "Getting a user's avatar",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "image received",
+                            description = "User avatar received successfully",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDTO.class)
+                                    schema = @Schema(implementation = Image.class)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "image not received",
+                            description = "User avatar getting error",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDTO.class)
+                                    schema = @Schema(implementation = Image.class)
                             )
                     )
-            },
-            tags = "UserDTO"
+            }
     )
     @GetMapping(value = "/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable long id) throws IOException {

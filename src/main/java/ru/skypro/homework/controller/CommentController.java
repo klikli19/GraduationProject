@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -29,30 +30,30 @@ import ru.skypro.homework.service.CommentService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("ads")
+@Tag(name = "Comments")
 public class CommentController {
     private final CommentService commentService;
 
     @Operation(
-            summary = "issues all comments",
+            summary = "Get all comments",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "all comments received",
+                            description = "All comments received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CommentDTO.class)
+                                    schema = @Schema(implementation = ResponseWrapperComment.class)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "all comments not received",
+                            description = "All comments not received",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CommentDTO.class)
+                                    schema = @Schema(implementation = ResponseWrapperComment.class)
                             )
                     )
-            },
-            tags = "CommentDTO"
+            }
     )
     @GetMapping("{id}/comments")
     public ResponseEntity<ResponseWrapperComment> getAllComments (@PathVariable int id) {
@@ -60,11 +61,11 @@ public class CommentController {
     }
 
     @Operation(
-            summary = "adds a comment",
+            summary = "Add a comment",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "comment added",
+                            description = "Comment added successfully",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = CommentDTO.class)
@@ -72,14 +73,13 @@ public class CommentController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "comment not added",
+                            description = "Error adding comment",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = CommentDTO.class)
                             )
                     )
-            },
-            tags = "CommentDTO"
+            }
     )
     @PostMapping("{id}/comments")
     public ResponseEntity<CommentDTO> addComment (@PathVariable int id,
@@ -89,11 +89,11 @@ public class CommentController {
     }
 
     @Operation(
-            summary = "deletes a comment",
+            summary = "Delete a comment",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "comment deleted",
+                            description = "Comment successfully deleted",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = CommentDTO.class)
@@ -101,14 +101,13 @@ public class CommentController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "comment not deleted",
+                            description = "Error deleting comment",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = CommentDTO.class)
                             )
                     )
-            },
-            tags = "CommentDTO"
+            }
     )
     @PreAuthorize("@commentServiceImpl.getComment(#commentId).author.email == authentication.name or hasRole('ADMIN')")
     @DeleteMapping("{adId}/comments/{commentId}")
@@ -119,11 +118,11 @@ public class CommentController {
     }
 
     @Operation(
-            summary = "updates the comment by id",
+            summary = "Update comment by id",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "comment updated",
+                            description = "Comment edited successfully",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = CommentDTO.class)
@@ -131,14 +130,13 @@ public class CommentController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "the comment has not been updated",
+                            description = "Error editing comment",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = CommentDTO.class)
                             )
                     )
-            },
-            tags = "CommentDTO"
+            }
     )
     @PreAuthorize("@commentServiceImpl.getComment(#commentId).author.email == authentication.name or hasRole('ADMIN')")
     @PatchMapping("{adId}/comments/{commentId}")
