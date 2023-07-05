@@ -35,7 +35,6 @@ import java.nio.file.Files;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -101,6 +100,7 @@ public class UserServiceImpl implements UserService {
      * @param authentication user identification
      * @throws IOException exclusion of input output
      */
+    @Transactional
     @Override
     public void updateAvatar(MultipartFile image, Authentication authentication) throws IOException {
         log.info("Request to update avatar of user");
@@ -116,6 +116,7 @@ public class UserServiceImpl implements UserService {
      * @return outputs the contents of the product image by user ID
      * @throws IOException exclusion of input output
      */
+    @Transactional
     @Override
     public byte[] getUserImage(Long userId) throws IOException {
         log.info("Request to getting image");
