@@ -31,6 +31,10 @@
 
 </ul>
 
+
+https://github.com/klikli19/GraduationProject/assets/108924340/1f50cf2d-401b-4d0b-a157-8b065e0932b4
+
+
 <h3>Участники проекта:</h3>
 <ul>
 <li><a href="https://github.com/MarinaGubina">Губина Марина</a></li>
