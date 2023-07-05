@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -43,18 +44,21 @@ public class WebSecurityConfig {
    */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.csrf()
-        .disable()
-        .authorizeHttpRequests(
-            (authorization) ->
-                authorization
-                    .mvcMatchers(HttpMethod.GET, AUTH_WHITELIST)
-                    .permitAll()
-                    .mvcMatchers("/ads/**", "/users/**")
-                    .authenticated())
-        .cors()
+    http.sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-        .httpBasic(withDefaults());
+            .csrf()
+            .disable()
+            .authorizeHttpRequests(
+                    (authorization) ->
+                            authorization
+                                    .mvcMatchers(HttpMethod.GET, AUTH_WHITELIST)
+                                    .permitAll()
+                                    .mvcMatchers("/ads/**", "/users/**")
+                                    .authenticated())
+            .cors()
+            .and()
+            .httpBasic(withDefaults());
     return http.build();
   }
 
