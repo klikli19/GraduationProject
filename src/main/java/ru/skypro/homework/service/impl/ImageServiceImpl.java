@@ -13,8 +13,6 @@ import java.io.IOException;
 
 /**
  * Service ImageServiceImpl is the implementation of ImageService
- * The image processing service downloads the image,
- * deletes the image, receives the image
  *
  * @see ImageRepository
  * @author Rogozin Alexandr
