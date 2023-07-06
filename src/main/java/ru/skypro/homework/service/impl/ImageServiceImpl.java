@@ -3,7 +3,6 @@ package ru.skypro.homework.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.exception.ImageNotFoundException;
@@ -13,7 +12,7 @@ import ru.skypro.homework.service.ImageService;
 import java.io.IOException;
 
 /**
- * Service ImageServiceImpl
+ * Service ImageServiceImpl is the implementation of ImageService
  * The image processing service downloads the image,
  * deletes the image, receives the image
  *
@@ -23,18 +22,11 @@ import java.io.IOException;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
 
-    /**
-     * Method loads the image
-     *
-     * @param imageFile product image
-     * @return displays the saved product image
-     * @throws IOException Exclusion of input output
-     */
+
     @Override
     public Image downloadImage(MultipartFile imageFile) throws IOException {
         log.info("Request to avatar upload");
@@ -44,23 +36,13 @@ public class ImageServiceImpl implements ImageService {
         return repository.save(image);
     }
 
-    /**
-     * MMethod of deleting an image
-     *
-     * @param id image identification number
-     */
     @Override
     public void deleteImage(Long id) {
         log.info("Request to avatar delete by id {}", id);
         repository.deleteById(id);
     }
 
-    /**
-     * Method outputs the image contents
-     *
-     * @param id image identification number
-     * @return returns the contents of the image
-     */
+
     @Override
     public byte[] getImage(Long id) {
         log.info("Request to avatar by id {}", id);
