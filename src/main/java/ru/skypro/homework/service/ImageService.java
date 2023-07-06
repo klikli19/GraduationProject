@@ -8,8 +8,7 @@ import java.io.IOException;
 /**
  * Interface ImageService
  * The interface is used to work with images
- * The image processing service downloads the image,
- * deletes the image, receives the image
+ * The image processing service downloads the image, deletes the image, receives the image
  *
  * @author Kilikova Anna
  */
