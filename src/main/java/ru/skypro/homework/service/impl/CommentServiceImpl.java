@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CreateCommentDTO;
 import ru.skypro.homework.dto.ResponseWrapperComment;
@@ -21,10 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Service CommentServiceImpl
- * The service for implementing the comments service receives all comments,
- * receives a comment, adds a comment,deletes a comment,
- * deletes everything by the ad ID, updates the comment
+ * Service CommentServiceImpl is the implementation of CommentService
  *
  * @author Bogomolov Ilya
  * @author Kilikova Anna
@@ -44,12 +40,6 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
 
 
-    /**
-     * Method of getting all comments
-     *
-     * @param idAd identifier ads
-     * @return Outputs the response wrapper
-     */
     @Override
     public ResponseWrapperComment getAllComments(int idAd) {
         log.info("getAllComments method");
@@ -59,26 +49,12 @@ public class CommentServiceImpl implements CommentService {
         return responseWrapper;
     }
 
-    /**
-     * Method outputs the addition of a comment
-     *
-     * @param commentId comment identification number
-     * @return displays the added comment
-     */
     @Override
     public Comment getComment(long commentId) {
         log.info("getComment method");
         return commentRepository.findById(commentId).orElseThrow();
     }
 
-    /**
-     * Method adds a comment
-     *
-     * @param id             identification number
-     * @param comment        the DTO comment being created
-     * @param authentication authentication
-     * @return outputs a new DTO comment
-     */
     @Override
     public CommentDTO addComment(int id, CreateCommentDTO comment, Authentication authentication) {
         log.info("addComment method");
@@ -92,36 +68,17 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.toCommentDTO(newComment);
     }
 
-    /**
-     * Method of deleting a comment
-     *
-     * @param adId      identifier ads
-     * @param commentId comment identification number
-     */
     public void deleteComment(int adId, int commentId) {
         log.info("deleteComment method");
         commentRepository.deleteByIdAndAdId(commentId, adId);
     }
 
-    /**
-     * The method deletes everything by the ad ID
-     *
-     * @param adId ad identification number
-     */
     @Override
     public void deleteAllByAdId(long adId) {
         log.info("deleteAllByAdId method");
         commentRepository.deleteAllByAdId(adId);
     }
 
-    /**
-     * Update method comment
-     *
-     * @param adId       ad identification number
-     * @param commentId  comment identification number
-     * @param commentDTO DTO comment
-     * @return outputs the user's DTO comment
-     */
     @Override
     public CommentDTO updateComment(int adId, int commentId, CommentDTO commentDTO) {
         log.info("updateComment method");

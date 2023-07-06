@@ -14,8 +14,7 @@ import ru.skypro.homework.security.MyUserDetailsService;
 import ru.skypro.homework.service.AuthService;
 
 /**
- * Service AuthServiceImpl
- * Service used to authentication and registration user
+ * Service AuthServiceImpl is the implementation of AuthService
  *
  * @author Kilikova Anna
  * @see MyUserDetailsService
@@ -36,13 +35,6 @@ public class AuthServiceImpl implements AuthService {
 
   private final UserMapper userMapper;
 
-  /**
-   * The method used to user authentication
-   *
-   * @param userName user login
-   * @param password user password
-   * @return authorized user
-   */
   @Override
   public boolean login(String userName, String password) {
     log.info("login: " + userName + " password: " + password);
@@ -50,24 +42,16 @@ public class AuthServiceImpl implements AuthService {
     return encoder.matches(password, userDetails.getPassword());
   }
 
-
-    /**
-     * The method used to user registration
-     *
-     * @param registerReq registration
-     * @param role        role
-     * @return registered user
-     */
-    @Override
-    public boolean register(RegisterReq registerReq, Role role) {
-        if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
-            return false;
-        }
-        User regUser = userMapper.toEntity(registerReq);
-        regUser.setRole(role);
-        regUser.setPassword(encoder.encode(regUser.getPassword()));
-        userRepository.save(regUser);
-        return true;
+  @Override
+  public boolean register(RegisterReq registerReq, Role role) {
+    if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
+        return false;
     }
+    User regUser = userMapper.toEntity(registerReq);
+    regUser.setRole(role);
+    regUser.setPassword(encoder.encode(regUser.getPassword()));
+    userRepository.save(regUser);
+    return true;
+  }
 
 }
