@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CreateCommentDTO;
 import ru.skypro.homework.dto.ResponseWrapperComment;
@@ -68,6 +69,8 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.toCommentDTO(newComment);
     }
 
+    @Transactional
+    @Override
     public void deleteComment(int adId, int commentId) {
         log.info("deleteComment method");
         commentRepository.deleteByIdAndAdId(commentId, adId);

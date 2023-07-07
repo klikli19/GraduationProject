@@ -89,6 +89,7 @@ public class AdServiceImpl implements AdService {
         return adsMapper.adToFullAdsDto(ad);
     }
 
+    @Transactional
     @Override
     public void deleteAd(Long adId) {
         log.info("Request to delete ad by id");
