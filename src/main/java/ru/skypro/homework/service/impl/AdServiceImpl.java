@@ -95,8 +95,8 @@ public class AdServiceImpl implements AdService {
         log.info("Request to delete ad by id");
         Ad ad = adRepository.findById(adId).orElseThrow(AdNotFoundException::new);
         commentService.deleteAllByAdId(adId);
-        adRepository.deleteById(adId);
         imageService.deleteImage(ad.getImage().getId());
+        adRepository.deleteById(adId);
     }
 
     @Override
