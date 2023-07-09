@@ -4,18 +4,20 @@ import lombok.Data;
 import ru.skypro.homework.constant.Role;
 
 /**
- * The RegisterReq class, represents the essence of registration
+ * The UserDTO class, represents the user's DTO entity
+ *
+ * @author Kilikova Anna
  */
 @Data
-public class RegisterReq {
+public class UserDTO {
     /**
-     * Field: username
+     * Field: user identification number
      */
-    private String username;
+    private Integer id;
     /**
-     * Field: password
+     * Field: Email
      */
-    private String password;
+    private String email;
     /**
      * Field: first name
      */
@@ -25,9 +27,13 @@ public class RegisterReq {
      */
     private String lastName;
     /**
-     * Field: phone user's
+     * Field: phone
      */
     private String phone;
+    /**
+     * Field: link to avatar
+     */
+    private String image;
     /**
      * Field: role user's
      */
